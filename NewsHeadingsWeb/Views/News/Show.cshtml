@@ -1,0 +1,41 @@
+﻿@model NewsHeadingsWeb.Models.HeadingModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Новости 24</title>
+</head>
+<body>
+    <div>
+        <h1>Новости 24</h1>
+        <p>новости, которые всегда с вами</p>
+        <menu>
+            <li><a href="/News/Show">Главная</a></li>
+            @foreach (NewsHeadingsWeb.Models.HeadingModel rec in ViewBag.Heading)
+            {
+                //<li>@Html.ActionLink(rec.Name, "Show", rec, null)</li>
+            //<li>@Url.Action("Show", "News", rec)</li>
+
+                //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
+                <li><a href=@Url.Action("Show", "News", rec)>@rec.Name</a></li>
+            }
+            <li><a href="/Heading/Insert">Добавить</a></li>
+        </menu>
+        @if (ViewBag.Articles != null && ViewBag.Articles.Count > 0)
+        {
+            foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
+            {
+                 <header>
+                     <h1>@rec.Name</h1>
+                 </header>
+                 <article>
+                     @rec.Text
+                 </article>
+             }
+        }
+        <!-- TODO: добавить вёрстку новостей -->
+    </div>
+</body>
+</html>
