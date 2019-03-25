@@ -16,7 +16,7 @@
             @foreach (NewsHeadingsWeb.Models.HeadingModel rec in ViewBag.Heading)
             {
                 //<li>@Html.ActionLink(rec.Name, "Show", rec, null)</li>
-            //<li>@Url.Action("Show", "News", rec)</li>
+                //<li>@Url.Action("Show", "News", rec)</li>
 
                 //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
                 <li><a href=@Url.Action("Show", "News", rec)>@rec.Name</a></li>
@@ -25,17 +25,18 @@
         </menu>
         @if (ViewBag.Articles != null && ViewBag.Articles.Count > 0)
         {
+            <a href=@Url.Action("Edit" + "//" + ViewBag.HeadingID.ToString(), "Heading", (int)ViewBag.HeadingID)>Редактировать рублику</a>
+
             foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
             {
-                 <header>
-                     <h1>@rec.Name</h1>
-                 </header>
-                 <article>
-                     @rec.Text
-                 </article>
-             }
-        }
+                <section>
+                    <h1> @rec.Name </h1>
+                    <pre>@rec.Text</pre>
+                </section>
+            }
+            <a href=@Url.Action("Insert" + "//" + ViewBag.HeadingID.ToString(), "Article", ViewBag.HeadingID)>Добавить статью</a>
+}
         <!-- TODO: добавить вёрстку новостей -->
-    </div>
+</div>
 </body>
 </html>

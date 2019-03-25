@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\HeadingController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -113,6 +114,8 @@
     <None Include="packages.config" />
     <Content Include="Views\News\Show.cshtml" />
     <Content Include="Views\Heading\Insert.cshtml" />
+    <Content Include="Views\Heading\Edit.cshtml" />
+    <Content Include="Views\Article\Insert.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

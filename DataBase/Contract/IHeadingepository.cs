@@ -39,6 +39,10 @@ namespace DataBase.Contract
         /// </summary>        
         List<HeadingInfo> GetAll();
         /// <summary>
+        /// Получить объекта по индефикатору
+        /// </summary>        
+        HeadingInfo GetByID(int id);
+        /// <summary>
         /// Получить статей по определенной рублики
         /// </summary>
         /// <param name="headingID">Ссылка на рублику</param>

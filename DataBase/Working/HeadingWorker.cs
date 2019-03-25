@@ -59,6 +59,25 @@ namespace DataBase.Working
         }
 
         /// <summary>
+        /// Возвратить объект по индефикатору
+        /// </summary>
+        /// <returns></returns>
+        public HeadingInfo GetByID(int id)
+        {
+            Heading headingTemp = mainContent.Headings.FirstOrDefault(n => n.ID == id);
+            if (headingTemp != null)
+            {
+                return new HeadingInfo
+                {
+                    ID = headingTemp.ID, 
+                    Name = headingTemp.Name,
+                    PathLink = headingTemp.PathLink
+                };
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Добавить новую рублику
         /// </summary>
         /// <param name="name">Наименование</param>
@@ -198,5 +217,6 @@ namespace DataBase.Working
             line = line.Replace(" ", "");
             return line;
         }
+
     }
 }
