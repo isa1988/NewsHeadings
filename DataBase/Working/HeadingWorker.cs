@@ -78,6 +78,25 @@ namespace DataBase.Working
         }
 
         /// <summary>
+        /// Возвратить объект по пути
+        /// </summary>
+        /// <returns></returns>
+        public HeadingInfo GetByPathLink(string pathLink)
+        {
+            Heading headingTemp = mainContent.Headings.FirstOrDefault(n => n.PathLink == pathLink);
+            if (headingTemp != null)
+            {
+                return new HeadingInfo
+                {
+                    ID = headingTemp.ID,
+                    Name = headingTemp.Name,
+                    PathLink = headingTemp.PathLink
+                };
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Добавить новую рублику
         /// </summary>
         /// <param name="name">Наименование</param>

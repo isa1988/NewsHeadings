@@ -145,6 +145,7 @@ namespace DataBase.Working
             article.Name = name.Trim();
             article.Text = text.Trim();
             article.Autor = autor.Trim();
+            article.HeadingID = headingID;
             if (isNew) mainContent.Articles.Add(article);
             mainContent.SaveChanges();
         }

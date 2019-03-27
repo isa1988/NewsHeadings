@@ -19,24 +19,27 @@
                 //<li>@Url.Action("Show", "News", rec)</li>
 
                 //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
-                <li><a href=@Url.Action("Show", "News", rec)>@rec.Name</a></li>
+                <li><a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a></li>
             }
             <li><a href="/Heading/Insert">Добавить</a></li>
         </menu>
-        @if (ViewBag.Articles != null && ViewBag.Articles.Count > 0)
+        @if (ViewBag.HeadingID != 0)
         {
-            <a href=@Url.Action("Edit" + "//" + ViewBag.HeadingID.ToString(), "Heading", (int)ViewBag.HeadingID)>Редактировать рублику</a>
-
-            foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
+            <a href=@Url.Action("Edit", "Heading", new {id = (int) ViewBag.HeadingID})>Редактировать рублику</a>
+            if (ViewBag.Articles?.Count > 0)
             {
-                <section>
-                    <h1> @rec.Name </h1>
-                    <pre>@rec.Text</pre>
-                </section>
+
+                foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
+                {
+                    <section>
+                        <h1> @rec.Name </h1>
+                        <pre>@rec.Text</pre>
+                    </section>
+                }
             }
-            <a href=@Url.Action("Insert" + "//" + ViewBag.HeadingID.ToString(), "Article", ViewBag.HeadingID)>Добавить статью</a>
-}
+            <a href=@Url.Action("Insert", "Article", new {id = ViewBag.HeadingID})>Добавить статью</a>
+        }
         <!-- TODO: добавить вёрстку новостей -->
-</div>
+    </div>
 </body>
 </html>

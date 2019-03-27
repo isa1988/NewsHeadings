@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataBase.DataModel;
 using DataBase.Working;
 using NewsHeadingsWeb.Models;
 
@@ -12,7 +13,7 @@ namespace NewsHeadingsWeb.Controllers
     {
         // GET: Home
         
-        public ActionResult Show(HeadingModel headingModel)
+        /*public ActionResult Show(HeadingModel headingModel)
         {
 
             var dp = new MainWorker();
@@ -41,8 +42,9 @@ namespace NewsHeadingsWeb.Controllers
                 ViewBag.Articles = articlesResults;
             }
             return View();
-        }
-        /*public ActionResult Show(string id)
+        }*/
+
+        public ActionResult Show(string pathLink)
         {
             var dp = new MainWorker();
             ViewBag.Heading = dp.Heading.GetAll().Select(x => new Models.HeadingModel()
@@ -51,14 +53,15 @@ namespace NewsHeadingsWeb.Controllers
                 Name = x.Name,
                 PathLink = x.PathLink
             }).ToList();
-
-            HeadingModel headingModel = ((List<HeadingModel>)ViewBag.Heading.FirstOrDefault(n => n.PathLink == id));
-            // TODO: добавить выборку новостей в зависимости от id 
-            if (headingModel == null)
+            HeadingInfo headingInfo = dp.Heading.GetByPathLink(pathLink);
+            if (headingInfo != null)
             {
-            }
-            else
-            {
+                HeadingModel headingModel = new HeadingModel
+                {
+                    ID = headingInfo.ID,
+                    Name = headingInfo.Name,
+                    PathLink = headingInfo.PathLink
+                };
                 List<ArticleModel> articlesResults = dp.Heading.ArticleByHeading(headingModel.ID)
                     .Select(x => new Models.ArticleModel()
                     {
@@ -71,8 +74,13 @@ namespace NewsHeadingsWeb.Controllers
                 ViewBag.HeadingID = headingModel.ID;
                 ViewBag.Articles = articlesResults;
             }
+            else
+            {
+                ViewBag.HeadingID = 0;
+                ViewBag.Articles = null;
+            }
             return View();
-        }*/
+        }
 
     }
 }

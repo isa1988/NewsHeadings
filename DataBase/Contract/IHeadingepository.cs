@@ -43,6 +43,11 @@ namespace DataBase.Contract
         /// </summary>        
         HeadingInfo GetByID(int id);
         /// <summary>
+        /// Получить объекта по пути
+        /// </summary>        
+        HeadingInfo GetByPathLink(string pathLink);
+        
+        /// <summary>
         /// Получить статей по определенной рублики
         /// </summary>
         /// <param name="headingID">Ссылка на рублику</param>

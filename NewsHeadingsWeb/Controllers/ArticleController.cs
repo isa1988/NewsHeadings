@@ -13,7 +13,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Insert(int id)
         {
-           return View(new ArticleModel{HeadingID = id});
+           return View();
         }
 
         [HttpPost]
@@ -21,6 +21,9 @@ namespace NewsHeadingsWeb.Controllers
         {
             try
             {
+                string[] id = Request.Path.Split('/');
+                int idbridge = Convert.ToInt32(id[id.Length - 1]);
+                article.HeadingID = idbridge;
                 var db = new MainWorker();
                 db.Article.Insert(article);
                 return Redirect("/News/Show");
