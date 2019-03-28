@@ -14,7 +14,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Insert(int headingID)
         {
-            return View(new ArticleModel{ID = headingID});
+            return View(new ArticleModel{HeadingID = headingID});
     }
 
         [HttpPost]
