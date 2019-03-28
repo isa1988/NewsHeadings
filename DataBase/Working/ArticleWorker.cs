@@ -36,7 +36,7 @@ namespace DataBase.Working
                 Text = x.Text,
                 Autor = x.Autor,
                 DateCreate = x.DateCreate,
-                HeadingID = x.HeadingID,
+                HeadingID = x.HeadingID
             }).ToList();
         }
         
@@ -53,10 +53,32 @@ namespace DataBase.Working
                 Text  = x.Text,
                 Autor = x.Autor,
                 DateCreate = x.DateCreate,
-                HeadingID = x.HeadingID, 
+                HeadingID = x.HeadingID
             }).ToList();
         }
-        
+
+        /// <summary>
+        /// Возвратить объект по индефикатору
+        /// </summary>
+        /// <returns></returns>
+        public ArticleInfo GetByID(int id)
+        {
+            Article articleTenp = mainContent.Articles.FirstOrDefault(n => n.ID == id);
+            if (articleTenp != null)
+            {
+                return new ArticleInfo
+                {
+                    ID = articleTenp.ID,
+                    Name = articleTenp.Name,
+                    Text = articleTenp.Text,
+                    Autor = articleTenp.Autor,
+                    DateCreate = articleTenp.DateCreate,
+                    HeadingID = articleTenp.HeadingID
+                };
+            }
+            return null;
+        }
+
         /// <summary>
         /// Добавить новой статьи 
         /// </summary>

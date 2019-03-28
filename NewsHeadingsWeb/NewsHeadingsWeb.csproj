@@ -116,6 +116,8 @@
     <Content Include="Views\Heading\Insert.cshtml" />
     <Content Include="Views\Heading\Edit.cshtml" />
     <Content Include="Views\Article\Insert.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,45 +1,37 @@
-﻿@model NewsHeadingsWeb.Models.HeadingModel
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model NewsHeadingsWeb.Models.HeadingModel
 
-<!DOCTYPE html>
+<h1>Новости 24</h1>
+<p>новости, которые всегда с вами</p>
+<menu>
+    <li><a href="/News/Show">Главная</a></li>
+    @foreach (NewsHeadingsWeb.Models.HeadingModel rec in ViewBag.Heading)
+    {
+        //<li>@Html.ActionLink(rec.Name, "Show", rec, null)</li>
+        //<li>@Url.Action("Show", "News", rec)</li>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Новости 24</title>
-</head>
-<body>
-    <div>
-        <h1>Новости 24</h1>
-        <p>новости, которые всегда с вами</p>
-        <menu>
-            <li><a href="/News/Show">Главная</a></li>
-            @foreach (NewsHeadingsWeb.Models.HeadingModel rec in ViewBag.Heading)
-            {
-                //<li>@Html.ActionLink(rec.Name, "Show", rec, null)</li>
-                //<li>@Url.Action("Show", "News", rec)</li>
+        //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
+        <li><a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a></li>
+    }
+    <li><a href="/Heading/Insert">Добавить</a></li>
+</menu>
+@if (ViewBag.HeadingID != 0)
+{
+    <a href=@Url.Action("Edit", "Heading", new {id = (int) ViewBag.HeadingID})>Редактировать рублику</a>
+    if (ViewBag.Articles?.Count > 0)
+    {
 
-                //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
-                <li><a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a></li>
-            }
-            <li><a href="/Heading/Insert">Добавить</a></li>
-        </menu>
-        @if (ViewBag.HeadingID != 0)
+        foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
         {
-            <a href=@Url.Action("Edit", "Heading", new {id = (int) ViewBag.HeadingID})>Редактировать рублику</a>
-            if (ViewBag.Articles?.Count > 0)
-            {
-
-                foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
-                {
-                    <section>
-                        <h1> @rec.Name </h1>
-                        <pre>@rec.Text</pre>
-                    </section>
-                }
-            }
-            <a href=@Url.Action("Insert", "Article", new {id = ViewBag.HeadingID})>Добавить статью</a>
+            <section>
+                <h1><a href=@Url.Action("Edit", "Article", new {id = rec.ID})>@rec.Name</a></h1>
+                <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                <pre>@rec.Text</pre>
+                <p>автор @rec.Autor</p>
+            </section>
         }
-        <!-- TODO: добавить вёрстку новостей -->
-    </div>
-</body>
-</html>
+    }
+    <a href=@Url.Action("Insert", "Article", new {headingID = ViewBag.HeadingID})>Добавить статью</a>
+}
