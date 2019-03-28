@@ -34,6 +34,7 @@ namespace DataBase.DataModel
         [DisplayName("Дата создания")]
         public DateTime DateCreate { get; set; }
 
+        [DisplayName("Рублика")]
         public int HeadingID { get; set; }
         public HeadingInfo HeadingCurr { get; set; }
         public override string ToString()
