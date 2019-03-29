@@ -1,29 +1,26 @@
-﻿@{
+﻿@model NewsHeadingsWeb.Models.HeadingModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model NewsHeadingsWeb.Models.HeadingModel
 
-<h1>Новости 24</h1>
+<h1>@Model.Title</h1>
 <p>новости, которые всегда с вами</p>
 <menu>
     <li><a href="/News/Show">Главная</a></li>
-    @foreach (NewsHeadingsWeb.Models.HeadingModel rec in ViewBag.Heading)
+    @foreach (NewsHeadingsWeb.Models.HeadingModel rec in @Model.Headings)
     {
-        //<li>@Html.ActionLink(rec.Name, "Show", rec, null)</li>
-        //<li>@Url.Action("Show", "News", rec)</li>
-
-        //<li><a href="/News/Show/@rec.PathLink">@rec.Name</a></li>
         <li><a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a></li>
     }
     <li><a href="/Heading/Insert">Добавить</a></li>
 </menu>
-@if (ViewBag.HeadingID != 0)
+@if (@Model.ID != 0)
 {
-    <a href=@Url.Action("Edit", "Heading", new {id = (int) ViewBag.HeadingID})>Редактировать рублику</a>
-    if (ViewBag.Articles?.Count > 0)
+    <a href=@Url.Action("Edit", "Heading", new {id = (int) @Model.ID})>Редактировать рублику</a>
+    if (@Model.Articles?.Count > 0)
     {
 
-        foreach (NewsHeadingsWeb.Models.ArticleModel rec in ViewBag.Articles)
+        foreach (NewsHeadingsWeb.Models.ArticleModel rec in @Model.Articles)
         {
             <section>
                 <h1><a href=@Url.Action("Edit", "Article", new {id = rec.ID})>@rec.Name</a></h1>
@@ -33,5 +30,5 @@
             </section>
         }
     }
-    <a href=@Url.Action("Insert", "Article", new {headingID = ViewBag.HeadingID})>Добавить статью</a>
+    <a href=@Url.Action("Insert", "Article", new {headingID = @Model.ID})>Добавить статью</a>
 }

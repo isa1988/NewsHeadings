@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\HeadingModel.cs" />
+    <Compile Include="Models\PageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

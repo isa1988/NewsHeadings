@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using DataBase.Contract;
 using DataBase.DataModel;
 
@@ -88,7 +89,7 @@ namespace DataBase.Working
         /// <param name="headingID">Ссылка на рублику</param>
         public void Insert(string name, string text, string autor, int headingID)
         {
-            Check(name, text, autor);
+            Check(name, text, autor, headingID);
             SetValue(name, text, autor, headingID);
         }
 
@@ -116,7 +117,7 @@ namespace DataBase.Working
             article = mainContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
-            Check(name, text, autor);
+            Check(name, text, autor, headingID);
             SetValue(name, text, autor, headingID, false);
         }
 
@@ -130,7 +131,7 @@ namespace DataBase.Working
                 throw new ArgumentException("Вы не указали объект");
             Edit(article.ID, article.Name, article.Text, article.Autor, article.HeadingID);
         }
-        private void Check(string name, string text, string autor)
+        private void Check(string name, string text, string autor, int headingID)
         {
             if (name.Trim() == string.Empty)
                 throw new ArgumentException("Не заполнено наименование");
@@ -140,12 +141,15 @@ namespace DataBase.Working
                 throw new ArgumentException("Не указан автор");
             if (article == null)
             {
-                if (mainContent.Articles.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower()))
+                if (mainContent.Articles.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower() &&
+                                                  x.HeadingID == headingID))
                     throw new ArgumentException("Текущее наименование уже используется");
             }
             else
             {
-                if (mainContent.Articles.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower() && x.ID != article.ID))
+                if (mainContent.Articles.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower() &&
+                                                  x.ID != article.ID &&
+                                                  x.HeadingID == headingID))
                     throw new ArgumentException("Текущее наименование уже используется");
             }
         }

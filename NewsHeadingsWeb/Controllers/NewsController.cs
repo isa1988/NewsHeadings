@@ -12,42 +12,12 @@ namespace NewsHeadingsWeb.Controllers
     public class NewsController : Controller
     {
         // GET: Home
-        
-        /*public ActionResult Show(HeadingModel headingModel)
-        {
-
-            var dp = new MainWorker();
-            ViewBag.Heading = dp.Heading.GetAll().Select(x => new Models.HeadingModel()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                PathLink = x.PathLink
-            }).ToList();
-
-            // TODO: добавить выборку новостей в зависимости от id 
-            if (headingModel == null)
-            {
-            } else
-            {
-                List<ArticleModel> articlesResults = dp.Heading.ArticleByHeading(headingModel.ID)
-                                                  .Select(x => new Models.ArticleModel()
-                {
-                    ID = x.ID,
-                    Name = x.Name,
-                    Text = x.Text,
-                    Autor = x.Autor,
-                    DateCreate = x.DateCreate
-                }).ToList();
-                ViewBag.HeadingID = headingModel.ID;
-                ViewBag.Articles = articlesResults;
-            }
-            return View();
-        }*/
-
         public ActionResult Show(string pathLink)
         {
             var dp = new MainWorker();
-            ViewBag.Heading = dp.Heading.GetAll().Select(x => new Models.HeadingModel()
+            HeadingModel headingModel = new HeadingModel();
+            headingModel.Title = "Новости 24";
+            headingModel.Headings = dp.Heading.GetAll().Select(x => new Models.HeadingModel()
             {
                 ID = x.ID,
                 Name = x.Name,
@@ -56,12 +26,9 @@ namespace NewsHeadingsWeb.Controllers
             HeadingInfo headingInfo = dp.Heading.GetByPathLink(pathLink);
             if (headingInfo != null)
             {
-                HeadingModel headingModel = new HeadingModel
-                {
-                    ID = headingInfo.ID,
-                    Name = headingInfo.Name,
-                    PathLink = headingInfo.PathLink
-                };
+                headingModel.ID = headingInfo.ID;
+                headingModel.Name = headingInfo.Name;
+                headingModel.PathLink = headingInfo.PathLink;
                 List<ArticleModel> articlesResults = dp.Heading.ArticleByHeading(headingModel.ID)
                     .Select(x => new Models.ArticleModel()
                     {
@@ -71,15 +38,13 @@ namespace NewsHeadingsWeb.Controllers
                         Autor = x.Autor,
                         DateCreate = x.DateCreate
                     }).ToList();
-                ViewBag.HeadingID = headingModel.ID;
-                ViewBag.Articles = articlesResults;
+                headingModel.Articles = articlesResults;
             }
             else
             {
-                ViewBag.HeadingID = 0;
-                ViewBag.Articles = null;
+                headingModel.Articles = null;
             }
-            return View();
+            return View(headingModel);
         }
 
     }

@@ -1,14 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@model NewsHeadingsWeb.Models.PageModel
+<!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title></title>
-    </head>
-    <body>
-        <div>
-            <h1>Новость проверка</h1>
-            @RenderBody()
-        </div>
-    </body>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Title</title>
+</head>
+<body>
+    <div>
+        <h1>Новость проверка</h1>
+        @RenderBody()
+    </div>
+</body>
 </html>

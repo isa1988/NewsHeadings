@@ -14,8 +14,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Insert()
         {
-            //ViewBag.BookId = id;
-            return View();
+            return View(new HeadingModel{Title = "Добавление рублики" });
         }
 
         [HttpPost]
@@ -24,13 +23,18 @@ namespace NewsHeadingsWeb.Controllers
             try
             {
                 var db = new MainWorker();
-                db.Heading.Insert(heading);
+                db.Heading.Insert(new HeadingInfo
+                {
+                     ID = heading.ID,
+                     Name = heading.Name
+                });
                 return Redirect("/News/Show");
 
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                heading.Title = "Добавление рублики";
+                heading.ErrorMessage = ex.Message;
                 return View(heading);
             }
 
@@ -45,7 +49,8 @@ namespace NewsHeadingsWeb.Controllers
             {
                 ID = headingInfo.ID,
                 Name = headingInfo.Name,
-                PathLink = headingInfo.PathLink
+                PathLink = headingInfo.PathLink,
+                Title = "Редактирование рублики"
             };
             return View(headingModel);
         }
@@ -56,13 +61,18 @@ namespace NewsHeadingsWeb.Controllers
             try
             {
                 var db = new MainWorker();
-                db.Heading.Edit(heading);
+                db.Heading.Edit(new HeadingInfo
+                    {
+                        ID = heading.ID,
+                        Name = heading.Name
+                    });
                 return Redirect("/News/Show");
 
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                heading.Title = "Редактирование рублики";
+                heading.ErrorMessage = ex.Message;
                 return View(heading);
             }
         }
