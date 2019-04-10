@@ -15,7 +15,7 @@ namespace DataBase.Contract
         /// <param name="text">Текст</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рублику</param>
-        void Insert(string name, string text, string autor, int headingID);
+        void Insert(string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
         /// <summary>
         /// Добавление новой статьи 
         /// </summary>
@@ -29,7 +29,7 @@ namespace DataBase.Contract
         /// <param name="text">Текст</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рублику</param>
-        void Edit(int id, string name, string text, string autor, int headingID);
+        void Edit(int id, string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
         /// <summary>
         /// Редактирование статьи 
         /// </summary>

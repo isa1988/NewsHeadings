@@ -28,7 +28,15 @@ namespace DataBase.DataModel
         /// Автор
         /// </summary>
         [DisplayName("Автор")]
-        public string Autor { get; set; }
+        public string Author { get; set; }
+
+
+        /// <summary>
+        /// Наименование файла
+        /// </summary>
+        [DisplayName("Наименование файла")]
+        public string FileName { get; set; }
+
         /// <summary>
         /// Дата создания
         /// </summary>

@@ -76,5 +76,38 @@ namespace NewsHeadingsWeb.Controllers
                 return View(heading);
             }
         }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var dp = new MainWorker();
+            HeadingInfo headingInfo = dp.Heading.GetByID(id);
+            HeadingModel headingModel = new HeadingModel
+            {
+                ID = headingInfo.ID,
+                Name = headingInfo.Name,
+                PathLink = headingInfo.PathLink,
+                Title = "Удаление рублики"
+            };
+            return View(headingModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(HeadingModel heading)
+        {
+            try
+            {
+                var db = new MainWorker();
+                db.Heading.Delete(heading.ID);
+                return Redirect("/News/Show");
+
+            }
+            catch (Exception ex)
+            {
+                heading.Title = "Удаление рублики";
+                heading.ErrorMessage = ex.Message;
+                return View(heading);
+            }
+        }
     }
 }

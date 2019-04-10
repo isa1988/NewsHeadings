@@ -35,8 +35,9 @@ namespace NewsHeadingsWeb.Controllers
                         ID = x.ID,
                         Name = x.Name,
                         Text = x.Text,
-                        Autor = x.Autor,
-                        DateCreate = x.DateCreate
+                        Author = x.Author,
+                        DateCreate = x.DateCreate, 
+                        FileName = x.FileName
                     }).ToList();
                 headingModel.Articles = articlesResults;
             }

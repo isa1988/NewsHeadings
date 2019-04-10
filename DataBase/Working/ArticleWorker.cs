@@ -1,10 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Web;
+using System.Web.Hosting;
 using DataBase.Contract;
 using DataBase.DataModel;
+using DataBase.Media;
 
 namespace DataBase.Working
 {
@@ -35,9 +40,10 @@ namespace DataBase.Working
                 ID = x.ID,
                 Name = x.Name,
                 Text = x.Text,
-                Autor = x.Autor,
+                Author = x.Author,
                 DateCreate = x.DateCreate,
-                HeadingID = x.HeadingID
+                HeadingID = x.HeadingID,
+                FileName = x.FileName
             }).ToList();
         }
         
@@ -52,9 +58,10 @@ namespace DataBase.Working
                 ID = x.ID,
                 Name = x.Name,
                 Text  = x.Text,
-                Autor = x.Autor,
+                Author = x.Author,
                 DateCreate = x.DateCreate,
-                HeadingID = x.HeadingID
+                HeadingID = x.HeadingID,
+                FileName = x.FileName
             }).ToList();
         }
 
@@ -72,9 +79,10 @@ namespace DataBase.Working
                     ID = articleTenp.ID,
                     Name = articleTenp.Name,
                     Text = articleTenp.Text,
-                    Autor = articleTenp.Autor,
+                    Author = articleTenp.Author,
                     DateCreate = articleTenp.DateCreate,
-                    HeadingID = articleTenp.HeadingID
+                    HeadingID = articleTenp.HeadingID,
+                    FileName = articleTenp.FileName
                 };
             }
             return null;
@@ -87,10 +95,14 @@ namespace DataBase.Working
         /// <param name="text">Тест статьи</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рублику</param>
-        public void Insert(string name, string text, string autor, int headingID)
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDeleteFile">Удаление файла при редактирование</param>
+        public void Insert(string name, string text, string autor, int headingID,
+                           string nameFile, byte[] file, bool isDeleteFile)
         {
             Check(name, text, autor, headingID);
-            SetValue(name, text, autor, headingID);
+            SetValue(name, text, autor, headingID, nameFile, file, isDeleteFile);
         }
 
         /// <summary>
@@ -101,7 +113,7 @@ namespace DataBase.Working
         {
             if (article == null)
                 throw new ArgumentException("Вы не указали объект");
-            Insert(article.Name, article.Text, article.Autor, article.HeadingID);
+            Insert(article.Name, article.Text, article.Author, article.HeadingID, article.FileName, article.File, article.IsDelete);
         }
 
         /// <summary>
@@ -112,13 +124,17 @@ namespace DataBase.Working
         /// <param name="text">Тест статьи</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рублику</param>
-        public void Edit(int id, string name, string text, string autor, int headingID)
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDeleteFile">Удаление файла при редактирование</param>
+        public void Edit(int id, string name, string text, string autor, int headingID,
+                         string nameFile, byte[] file, bool isDeleteFile)
         {
             article = mainContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
             Check(name, text, autor, headingID);
-            SetValue(name, text, autor, headingID, false);
+            SetValue(name, text, autor, headingID, nameFile, file, isDeleteFile, false);
         }
 
         /// <summary>
@@ -129,7 +145,8 @@ namespace DataBase.Working
         {
             if (article == null)
                 throw new ArgumentException("Вы не указали объект");
-            Edit(article.ID, article.Name, article.Text, article.Autor, article.HeadingID);
+            Edit(article.ID, article.Name, article.Text, article.Author, article.HeadingID,
+                article.FileName, article.File, article.IsDelete);
         }
         private void Check(string name, string text, string autor, int headingID)
         {
@@ -160,21 +177,124 @@ namespace DataBase.Working
         /// <param name="text">Тест статьи</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рублику</param>
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDeleteFile">Удаление файла при редактирование</param>
         /// <param name="isNew">Новый</param>
-        private void SetValue(string name, string text, string autor, int headingID, bool isNew = true)
+        private void SetValue(string name, string text, string autor, int headingID,
+            string nameFile, byte[] file, bool isDeleteFile,  bool isNew = true)
         {
+            WorkForFiles workForFiles = WorkForFiles.New;
             if (isNew)
             {
                 article = new Article();
                 article.DateCreate = DateTime.Now;
+                workForFiles = WorkForFiles.New;
             }
+            else
+            {
+                workForFiles = WorkForFiles.Edit;
+                nameFile = "foto" + article.ID.ToString() + nameFile;
+            }
+            
             article.Name = name.Trim();
             article.Text = text.Trim();
-            article.Autor = autor.Trim();
+            article.Author = autor.Trim();
+            
             article.HeadingID = headingID;
             if (isNew) mainContent.Articles.Add(article);
             mainContent.SaveChanges();
+            if (workForFiles == WorkForFiles.New)
+            {
+                nameFile = "foto" + article.ID.ToString() + nameFile;
+                if (file?.Length > 0)
+                    article.FileName = nameFile;
+                else
+                    article.FileName = string.Empty;
+                mainContent.SaveChanges();
+                if (file?.Length > 0)
+                    WorkForFile(nameFile, string.Empty, file, isDeleteFile, WorkForFiles.New);
+            }
+            else
+            {
+                WorkForFile(nameFile, article.FileName, file, isDeleteFile, WorkForFiles.Edit);
+                if (file?.Length > 0 && (article.FileName == null || article.FileName == string.Empty))
+                {
+                    article.FileName = nameFile;
+                    mainContent.SaveChanges();
+                }
+                else if (isDeleteFile)
+                {
+                    article.FileName = string.Empty;
+                    mainContent.SaveChanges();
+                }
+            }
         }
+        /// <summary>
+        /// Работа с файлами
+        /// </summary>
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="oldName">Предыдущее наименование из БД для удалеия</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDelete">Удаление файла при редактирование</param>
+        /// <param name="workForFile">Что нужно сделать</para>
+        private void WorkForFile(string nameFile, string oldName, byte[] file, bool isDelete, WorkForFiles workForFile)
+        {
+            Configuration cfg = null;
+            if (HttpContext.Current != null)
+            {
+                cfg =
+                    System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            }
+            else
+            {
+                cfg =
+                    ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            MediaFolderConfigSection section = (MediaFolderConfigSection)cfg.GetSection("MediaFolder");
+            if (section == null) return;
+            string pathDir = section.FolderItems[0].Path;
+            pathDir = HostingEnvironment.MapPath(pathDir);
+
+            switch (workForFile)
+            {
+                case WorkForFiles.New:
+                {
+                    if (file?.Length > 0)
+                    {
+                        //File.WriteAllBytes(pathDir + nameFile, file);
+                        using (var stream = new FileStream(pathDir + nameFile, FileMode.Create))
+                        {
+                            stream.Write(file, 0, file.Length);
+                        }
+                    }
+
+                    break;
+                }
+                case WorkForFiles.Edit:
+                {
+                    if (isDelete && oldName?.Length > 0)
+                    {
+                        File.Delete(pathDir + oldName);
+                    }
+                    else if (file?.Length > 0 && nameFile?.Length > 0)
+                    {
+                        if (oldName == null || oldName == string.Empty) oldName = nameFile;
+                        //if (oldName?.Length > 0)
+                            //File.Delete(pathDir + oldName);
+                        File.WriteAllBytes(pathDir + oldName, file);
+                    }
+                    break;
+                }
+                case WorkForFiles.Delete:
+                {
+                    if (oldName?.Length > 0)
+                        File.Delete(pathDir + oldName);
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// Удалить статью
         /// </summary>
@@ -184,9 +304,17 @@ namespace DataBase.Working
             article = mainContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
+            WorkForFile(string.Empty, article.FileName, null, true, WorkForFiles.Delete);
             mainContent.Articles.Remove(article);
             mainContent.SaveChanges();
         }
 
+    }
+
+    enum WorkForFiles
+    {
+        New = 0,
+        Edit = 1,
+        Delete = 2
     }
 }

@@ -1,0 +1,7 @@
+﻿.navbar-dark .nav-item > .nav-link.active {
+    color: white;
+}
+
+textarea{
+    width: 100%;
+}

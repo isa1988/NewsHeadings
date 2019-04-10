@@ -30,12 +30,29 @@ namespace NewsHeadingsWeb.Models
         /// Автор
         /// </summary>
         [DisplayName("Автор")]
-        public string Autor { get; set; }
+        public string Author { get; set; }
         /// <summary>
         /// Дата создания
         /// </summary>
         [DisplayName("Дата создания")]
         public DateTime DateCreate { get; set; }
+
+        /// <summary>
+        /// Наименование файла
+        /// </summary>
+        [DisplayName("Наименование файла")]
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// Удалить файл
+        /// </summary>
+        [DisplayName("Удалить картинку")]
+        public bool IsDelete { get; set; }
+
+        /// <summary>
+        /// Файл
+        /// </summary>
+        public byte[] FileMain { get; set; }
 
         [DisplayName("Рублика")]
         public int HeadingID { get; set; }

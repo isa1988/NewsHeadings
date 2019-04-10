@@ -5,7 +5,7 @@
 }
 <h2>@Model.Title</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(Html.BeginForm("Edit", "Article", new { id = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
     @Html.AntiForgeryToken()
     
@@ -21,23 +21,20 @@
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Autor, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Autor, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Autor, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
 
     <div class="form-group">
@@ -49,22 +46,29 @@
             @Html.ValidationMessageFor(model => model.HeadingID, "", new { @class = "text-danger" })
         </div>
     </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.IsDelete, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IsDelete, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <input type="file" name="file" /><br>
 
     @if (@Model.ErrorMessage != null && @Model.ErrorMessage != string.Empty)
     {
         <div class="form-group">
-            Ошибка: @Model.ErrorMessage;
+            <p class="text-danger"> Ошибка: @Model.ErrorMessage </p>
         </div>
     }
+    
+    <p></p>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Сохранить" class="btn btn-default" />
-        </div>
+    <div class="form-group col-md-offset-2 col-md-10">
+        <input type="submit" value="Сохранить" class="btn btn-success" />
+        <a href="/News/Show" class="btn btn-success">Назад</a>
     </div>
 </div>
 }
-
-<div>
-    <a href="/News/Show">Назад</a>
-</div>

@@ -260,3 +260,5 @@ __pycache__/
 # Insert NewsHeadingsWeb/bin/roslyn
 **/bin/*
 !**/roslyn/
+
+!**/Media/

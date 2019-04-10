@@ -15,9 +15,7 @@ namespace DataBase.Working
 
         public HeadingWorker(object mainContent)
         {
-            //if (mainContent is MainContent) this.mainContent = (MainContent) mainContent;
-            this.mainContent = new MainContent();
-            heading = this.mainContent.Headings.FirstOrDefault(x => x.ID == 1);
+            if (mainContent is MainContent) this.mainContent = (MainContent)mainContent;
         }
 
         public HeadingWorker()
@@ -37,9 +35,10 @@ namespace DataBase.Working
                 ID = x.ID,
                 Name = x.Name,
                 Text = x.Text,
-                Autor = x.Autor,
+                Author = x.Author,
                 DateCreate = x.DateCreate,
                 HeadingID = x.HeadingID,
+                FileName = x.FileName
             }).ToList();
         }
 
@@ -191,7 +190,8 @@ namespace DataBase.Working
             heading = mainContent.Headings.FirstOrDefault(x => x.ID == id);
             if (heading == null)
                 throw new ArgumentException("Не найден объект");
-            if (heading.Articles != null && heading.Articles.Count > 0)
+            List<ArticleInfo> articleList = ArticleByHeading(id);
+            if (articleList != null && articleList.Count > 0)
                 throw new ArgumentException("В данной рублике есть статьи");
             mainContent.Headings.Remove(heading);
             mainContent.SaveChanges();

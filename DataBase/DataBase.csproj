@@ -41,7 +41,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,9 +62,16 @@
     <Compile Include="DataModel\Article.cs" />
     <Compile Include="DataModel\MainContext.cs" />
     <Compile Include="DataModel\Heading.cs" />
+    <Compile Include="Media\FolderElement.cs" />
+    <Compile Include="Media\FoldersCollection.cs" />
+    <Compile Include="Media\MediaFolderConfigSection .cs" />
     <Compile Include="Migrations\201903191725299_CreateTableArticleAndHeading.cs" />
     <Compile Include="Migrations\201903191725299_CreateTableArticleAndHeading.Designer.cs">
       <DependentUpon>201903191725299_CreateTableArticleAndHeading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042039340_AddFileAndEditFilds.cs" />
+    <Compile Include="Migrations\201904042039340_AddFileAndEditFilds.Designer.cs">
+      <DependentUpon>201904042039340_AddFileAndEditFilds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +89,10 @@
     <EmbeddedResource Include="Migrations\201903191725299_CreateTableArticleAndHeading.resx">
       <DependentUpon>201903191725299_CreateTableArticleAndHeading.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042039340_AddFileAndEditFilds.resx">
+      <DependentUpon>201904042039340_AddFileAndEditFilds.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

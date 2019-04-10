@@ -4,31 +4,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar1">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="/News/Show">Главная <span class="sr-only">(current)</span></a>
+            </li>
+            @foreach (NewsHeadingsWeb.Models.HeadingModel rec in @Model.Headings)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link" href="/Heading/Insert">Добавить </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <h1>@Model.Title</h1>
 <p>новости, которые всегда с вами</p>
-<menu>
-    <li><a href="/News/Show">Главная</a></li>
-    @foreach (NewsHeadingsWeb.Models.HeadingModel rec in @Model.Headings)
-    {
-        <li><a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a></li>
-    }
-    <li><a href="/Heading/Insert">Добавить</a></li>
-</menu>
 @if (@Model.ID != 0)
 {
-    <a href=@Url.Action("Edit", "Heading", new {id = (int) @Model.ID})>Редактировать рублику</a>
+<h3>Рублика @Model.Name</h3>
+    <a href=@Url.Action("Edit", "Heading", new {id = @Model.ID}) class="btn btn-info">Редактировать рублику</a>
+    <a href=@Url.Action("Delete", "Heading" , new {id = @Model.ID}) class="btn btn-info">Удалить рублику</a>
+    <a href=@Url.Action("Insert", "Article", new {headingID = @Model.ID}) class="btn btn-info">Добавить статью</a>
     if (@Model.Articles?.Count > 0)
     {
-
-        foreach (NewsHeadingsWeb.Models.ArticleModel rec in @Model.Articles)
+        <p></p>
+        int steps = (int)(Model.Articles.Count / 3);
+        if (Model.Articles.Count % 3 != 0)
         {
-            <section>
-                <h1><a href=@Url.Action("Edit", "Article", new {id = rec.ID})>@rec.Name</a></h1>
-                <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
-                <pre>@rec.Text</pre>
-                <p>автор @rec.Autor</p>
-            </section>
+            steps++;
+        }
+        int stepMore = 0;
+        for (int i = 0; i < steps; i++)
+        {
+            stepMore = i * 3 + 3;
+            if (stepMore > Model.Articles.Count)
+            {
+                stepMore = Model.Articles.Count;
+            }
+            <div class="row">
+                @for (int j = i * 3; j < stepMore; j++)
+                {
+                    NewsHeadingsWeb.Models.ArticleModel rec = Model.Articles[j];
+                    <div class="col-4">
+                        <section>
+                            <h1>@rec.Name</h1><br />
+                            <a href=@Url.Action("Edit", "Article", new {id = rec.ID}) class="btn btn-info">редактировать</a>
+                            <a href=@Url.Action("Delete", "Article", new {id = rec.ID}) class="btn btn-info">удалить</a>
+                            <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                            @if (rec.FileName?.Length > 0)
+                            {
+                                <img src="@Url.Content("~/Media/" + rec.FileName)" class="img-fluid img-thumbnail" />
+                            }
+                            <pre>@rec.Text</pre>
+                            <p>автор @rec.Author</p>
+                        </section>
+                    </div>
+                }
+            </div>
         }
     }
-    <a href=@Url.Action("Insert", "Article", new {headingID = @Model.ID})>Добавить статью</a>
 }
