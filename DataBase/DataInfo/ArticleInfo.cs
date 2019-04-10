@@ -50,7 +50,7 @@ namespace DataBase.DataModel
         /// </summary>
         public byte[] File { get; set; }
 
-        [DisplayName("Рублика")]
+        [DisplayName("Рубрика")]
         public int HeadingID { get; set; }
         public HeadingInfo HeadingCurr { get; set; }
         public override string ToString()

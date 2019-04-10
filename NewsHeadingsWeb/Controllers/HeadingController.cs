@@ -20,23 +20,14 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Insert(HeadingModel heading)
         {
-            try
+            var db = new MainWorker();
+            db.Heading.Insert(new HeadingInfo
             {
-                var db = new MainWorker();
-                db.Heading.Insert(new HeadingInfo
-                {
-                     ID = heading.ID,
-                     Name = heading.Name
-                });
-                return Redirect("/News/Show");
+                 ID = heading.ID,
+                 Name = heading.Name
+            });
+            return Redirect("/News/Show");
 
-            }
-            catch (Exception ex)
-            {
-                heading.Title = "Добавление рублики";
-                heading.ErrorMessage = ex.Message;
-                return View(heading);
-            }
 
         }
 
@@ -58,23 +49,13 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Edit(HeadingModel heading)
         {
-            try
-            {
-                var db = new MainWorker();
-                db.Heading.Edit(new HeadingInfo
-                    {
-                        ID = heading.ID,
-                        Name = heading.Name
-                    });
-                return Redirect("/News/Show");
-
-            }
-            catch (Exception ex)
-            {
-                heading.Title = "Редактирование рублики";
-                heading.ErrorMessage = ex.Message;
-                return View(heading);
-            }
+            var db = new MainWorker();
+            db.Heading.Edit(new HeadingInfo
+                {
+                    ID = heading.ID,
+                    Name = heading.Name
+                });
+            return Redirect("/News/Show");
         }
 
         [HttpGet]
@@ -95,19 +76,9 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Delete(HeadingModel heading)
         {
-            try
-            {
-                var db = new MainWorker();
-                db.Heading.Delete(heading.ID);
-                return Redirect("/News/Show");
-
-            }
-            catch (Exception ex)
-            {
-                heading.Title = "Удаление рублики";
-                heading.ErrorMessage = ex.Message;
-                return View(heading);
-            }
+            var db = new MainWorker();
+            db.Heading.Delete(heading.ID);
+            return Redirect("/News/Show");
         }
     }
 }

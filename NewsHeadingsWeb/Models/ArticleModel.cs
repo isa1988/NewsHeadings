@@ -54,11 +54,11 @@ namespace NewsHeadingsWeb.Models
         /// </summary>
         public byte[] FileMain { get; set; }
 
-        [DisplayName("Рублика")]
+        [DisplayName("Рубрика")]
         public int HeadingID { get; set; }
         public HeadingModel HeadingCurr { get; set; }
         /// <summary>
-        /// Список рублик для DropDownListFor
+        /// Список рубрик для DropDownListFor
         /// </summary>
         public List<SelectListItem> Headings { get; set; }
         

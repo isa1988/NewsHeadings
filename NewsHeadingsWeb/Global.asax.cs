@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moveax.Mvc.ErrorHandler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,5 +15,17 @@ namespace NewsHeadingsWeb
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+        protected void Application_Error(object sender,  EventArgs e)
+        {
+            var errorHandler = new MvcApplicationErrorHandler(application: this, exception: this.Server.GetLastError())
+            {
+                EnableHttpReturnCodes = false,
+                PassThroughHttp401 = false
+            };
+
+            errorHandler.Execute();
+        }
     }
+
 }

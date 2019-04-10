@@ -151,7 +151,7 @@ namespace DataBase.Working
         /// <param name="name"></param>
         private void Check(string name, string linkPath)
         {
-            if (name.Trim() == string.Empty)
+            if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Не заполнено наименование");
             if (heading == null)
             {

@@ -21,34 +21,24 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Insert(ArticleModel article, HttpPostedFileBase file)
         {
-            try
+            var worker = new MainWorker();
+            ArticleInfo articleInfo = new ArticleInfo
             {
-                var worker = new MainWorker();
-                ArticleInfo articleInfo = new ArticleInfo
-                {
-                    ID = article.ID,
-                    Name = article.Name,
-                    Author = article.Author,
-                    Text = article.Text,
-                    HeadingID = article.HeadingID,
-                    IsDelete = article.IsDelete
-                };
-                if (file != null)
-                {
-                    articleInfo.FileName = System.IO.Path.GetFileName(file.FileName);
-                    articleInfo.File = new byte[file.ContentLength];
-                    file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
-                }
-                worker.Article.Insert(articleInfo);
-                return Redirect("/News/Show");
-
-            }
-            catch (Exception ex)
+                ID = article.ID,
+                Name = article.Name,
+                Author = article.Author,
+                Text = article.Text,
+                HeadingID = article.HeadingID,
+                IsDelete = article.IsDelete
+            };
+            if (file != null)
             {
-                article.Title = "Добавление статьи";
-                article.ErrorMessage = ex.Message;
-                return View(article);
+                articleInfo.FileName = System.IO.Path.GetFileName(file.FileName);
+                articleInfo.File = new byte[file.ContentLength];
+                file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
             }
+            worker.Article.Insert(articleInfo);
+            return Redirect("/News/Show");
 
         }
 
@@ -77,37 +67,24 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Edit(ArticleModel article, HttpPostedFileBase file)
         {
-            try
+            var worker = new MainWorker();
+            ArticleInfo articleInfo = new ArticleInfo
             {
-                var worker = new MainWorker();
-                ArticleInfo articleInfo = new ArticleInfo
-                {
-                    ID = article.ID,
-                    Name = article.Name,
-                    Author = article.Author,
-                    Text = article.Text,
-                    HeadingID = article.HeadingID,
-                    IsDelete = article.IsDelete
-                };
-                if (file != null)
-                {
-                    articleInfo.FileName = System.IO.Path.GetFileName(file.FileName);
-                    articleInfo.File = new byte[file.ContentLength];
-                    file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
-                }
-                worker.Article.Edit(articleInfo);
-                return Redirect("/News/Show");
-
-            }
-            catch (Exception ex)
+                ID = article.ID,
+                Name = article.Name,
+                Author = article.Author,
+                Text = article.Text,
+                HeadingID = article.HeadingID,
+                IsDelete = article.IsDelete
+            };
+            if (file != null)
             {
-                article.Title = "Редактирование статьи";
-                var db = new MainWorker();
-                article.Headings = db.Heading.GetAll().Select(x =>
-                    new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
-                article.ErrorMessage = ex.Message;
-                return View(article);
+                articleInfo.FileName = System.IO.Path.GetFileName(file.FileName);
+                articleInfo.File = new byte[file.ContentLength];
+                file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
             }
+            worker.Article.Edit(articleInfo);
+            return Redirect("/News/Show");
         }
 
         [HttpGet]
@@ -134,31 +111,18 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Delete(ArticleModel article)
         {
-            try
+            var worker = new MainWorker();
+            ArticleInfo articleInfo = new ArticleInfo
             {
-                var worker = new MainWorker();
-                ArticleInfo articleInfo = new ArticleInfo
-                {
-                    ID = article.ID,
-                    Name = article.Name,
-                    Author = article.Author,
-                    Text = article.Text,
-                    HeadingID = article.HeadingID,
-                    IsDelete = article.IsDelete
-                };
-                worker.Article.Delete(articleInfo.ID);
-                return Redirect("/News/Show");
-
-            }
-            catch (Exception ex)
-            {
-                article.Title = "Удаление статьи";
-                var db = new MainWorker();
-                article.Headings = db.Heading.GetAll().Select(x =>
-                    new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
-                article.ErrorMessage = ex.Message;
-                return View(article);
-            }
+                ID = article.ID,
+                Name = article.Name,
+                Author = article.Author,
+                Text = article.Text,
+                HeadingID = article.HeadingID,
+                IsDelete = article.IsDelete
+            };
+            worker.Article.Delete(articleInfo.ID);
+            return Redirect("/News/Show");
         }
     }
 }

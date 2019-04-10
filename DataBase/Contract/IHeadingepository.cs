@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace DataBase.Contract
 {
     /// <summary>
-    /// Операции с рубликами новостей
+    /// Операции с рубриками новостей
     /// </summary>
     public interface IHeadingRepository
     {
         /// <summary>
-        /// Добавление новой рублики
+        /// Добавление новой рубрики
         /// </summary>
         /// <param name="name">Наименование</param>
         void Insert(string name);
@@ -19,7 +19,7 @@ namespace DataBase.Contract
         void Insert(HeadingInfo heading);
 
         /// <summary>
-        /// Редактирование рублики
+        /// Редактирование рубрики
         /// </summary>
         /// <param name="id">Индефикатор</param>
         /// <param name="name">Наименование</param>
@@ -29,13 +29,13 @@ namespace DataBase.Contract
         /// </summary>
         void Edit(HeadingInfo heading);
         /// <summary>
-        /// Удаление рублики
+        /// Удаление рубрики
         /// </summary>
         /// <param name="id">Индефикатор</param>
         void Delete(int id);
 
         /// <summary>
-        /// Получить всех рублик
+        /// Получить всех рубрик
         /// </summary>        
         List<HeadingInfo> GetAll();
         /// <summary>
@@ -48,9 +48,9 @@ namespace DataBase.Contract
         HeadingInfo GetByPathLink(string pathLink);
         
         /// <summary>
-        /// Получить статей по определенной рублики
+        /// Получить статей по определенной рубрики
         /// </summary>
-        /// <param name="headingID">Ссылка на рублику</param>
+        /// <param name="headingID">Ссылка на рубрику</param>
         List<ArticleInfo> ArticleByHeading(int headingID);
     }
 }

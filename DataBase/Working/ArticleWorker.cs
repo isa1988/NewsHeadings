@@ -150,11 +150,11 @@ namespace DataBase.Working
         }
         private void Check(string name, string text, string autor, int headingID)
         {
-            if (name.Trim() == string.Empty)
+            if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Не заполнено наименование");
-            if (text.Trim() == string.Empty)
+            if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("Не заполнен текст статьи");
-            if (autor.Trim() == string.Empty)
+            if (string.IsNullOrEmpty(autor))
                 throw new ArgumentException("Не указан автор");
             if (article == null)
             {

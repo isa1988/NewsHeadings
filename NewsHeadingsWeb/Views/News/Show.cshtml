@@ -30,18 +30,13 @@
 <p>новости, которые всегда с вами</p>
 @if (@Model.ID != 0)
 {
-<h3>Рублика @Model.Name</h3>
-    <a href=@Url.Action("Edit", "Heading", new {id = @Model.ID}) class="btn btn-info">Редактировать рублику</a>
-    <a href=@Url.Action("Delete", "Heading" , new {id = @Model.ID}) class="btn btn-info">Удалить рублику</a>
+<h3>Рубрика @Model.Name</h3>
+    <a href=@Url.Action("Edit", "Heading", new {id = @Model.ID}) class="btn btn-info">Редактировать рубрику</a>
+    <a href=@Url.Action("Delete", "Heading" , new {id = @Model.ID}) class="btn btn-info">Удалить рубрику</a>
     <a href=@Url.Action("Insert", "Article", new {headingID = @Model.ID}) class="btn btn-info">Добавить статью</a>
     if (@Model.Articles?.Count > 0)
     {
         <p></p>
-        int steps = (int)(Model.Articles.Count / 3);
-        if (Model.Articles.Count % 3 != 0)
-        {
-            steps++;
-        }
         foreach (var articlesList in Model.Articles.Select((item, index) => new {item, index})
                                                     .GroupBy(x => x.index / 3)
                                                     .Select(g => g.Select(x => x.item)))
@@ -50,20 +45,32 @@
             @foreach (NewsHeadingsWeb.Models.ArticleModel rec in articlesList)
             {
                 <div class="col-4">
-                    <section>
-                        <h1>@rec.Name</h1><br/>
-                        <a href=@Url.Action("Edit", "Article", new {id = rec.ID}) class="btn btn-info">редактировать</a>
-                        <a href=@Url.Action("Delete", "Article", new {id = rec.ID}) class="btn btn-info">удалить</a>
-                        <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
-                        @if (rec.FileName?.Length > 0)
-                        {
-                            <img src="@Url.Content("~/Media/" + rec.FileName)" class="img-fluid img-thumbnail"/>
-                        }
-                        <p class="word">@rec.Text</p>
-                        <p class="text-right font-italic">автор @rec.Author</p>
-                    </section>
-                </div>
-            }
+                    <div class="row row-conformity">
+                        <div class="col-12">
+                            <h1>@rec.Name</h1><br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href=@Url.Action("Edit", "Article", new {id = rec.ID}) class="btn btn-info">редактировать</a>
+                            <a href=@Url.Action("Delete", "Article", new {id = rec.ID}) class="btn btn-info">удалить</a>
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                            @if (rec.FileName?.Length > 0)
+                            {
+                                <img src="@Url.Content("~/Media/" + rec.FileName)" class="img-fluid img-thumbnail" />
+                            }
+                            <p class="word">@rec.Text</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <p class="text-right font-italic">автор @rec.Author</p>
+                        </div>
+                    </div>
+                    }
             </div>
         }
     }

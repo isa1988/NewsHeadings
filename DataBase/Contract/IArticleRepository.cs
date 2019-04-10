@@ -14,7 +14,7 @@ namespace DataBase.Contract
         /// <param name="name">Наименование</param>
         /// <param name="text">Текст</param>
         /// <param name="autor">Автор</param>
-        /// <param name="headingID">Ссылка на рублику</param>
+        /// <param name="headingID">Ссылка на рубрику</param>
         void Insert(string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
         /// <summary>
         /// Добавление новой статьи 
@@ -28,7 +28,7 @@ namespace DataBase.Contract
         /// <param name="name">Наименование</param>
         /// <param name="text">Текст</param>
         /// <param name="autor">Автор</param>
-        /// <param name="headingID">Ссылка на рублику</param>
+        /// <param name="headingID">Ссылка на рубрику</param>
         void Edit(int id, string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
         /// <summary>
         /// Редактирование статьи 
@@ -49,9 +49,9 @@ namespace DataBase.Contract
         /// </summary>        
         ArticleInfo GetByID(int id);
         /// <summary>
-        /// Получить статей по определенной рублики
+        /// Получить статей по определенной рубрики
         /// </summary>
-        /// <param name="headingID">Ссылка на рублику</param>
+        /// <param name="headingID">Ссылка на рубрику</param>
         List<ArticleInfo> ArticleByHeading(int headingID);
     }
 }

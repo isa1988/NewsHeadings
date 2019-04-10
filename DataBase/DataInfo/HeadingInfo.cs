@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace DataBase.DataModel
 {
     /// <summary>
-    /// Рублика
+    /// Рубрика
     /// </summary>
     public class HeadingInfo
     {

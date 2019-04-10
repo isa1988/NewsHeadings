@@ -35,9 +35,16 @@
                 @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div id="dropZone">
+            Для загрузки, перетащите файл сюда.
+        </div>
+        <br>
+        <input type="file" id ="file" name="file" accept=".jpg, .jpeg, .png"/><br>
+        
+        <div id="imageContent">
 
-        <input type="file" name="file" /><br>
-
+        </div>
+        <br>
 
         <!--<div class="form-group">
             //@Html.LabelFor(model => model.HeadingID, htmlAttributes: new { @class = "control-label col-md-2" })

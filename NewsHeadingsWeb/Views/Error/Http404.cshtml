@@ -1,0 +1,9 @@
+﻿@model NewsHeadingsWeb.Models.ErrorModdel
+@{
+    Layout = null;
+}
+<h2> Ошибка сервера</h2>
+<h3>@Model.ExceptionType</h3>
+<div class="col">
+    <p>@Model.ExceptionMessage</p>
+</div>

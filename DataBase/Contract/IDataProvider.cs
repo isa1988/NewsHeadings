@@ -9,7 +9,7 @@ namespace DataBase.Contract
         IArticleRepository Article { get; }
 
         /// <summary>
-        /// Рублики новостей
+        /// Рубрики новостей
         /// </summary>
         IHeadingRepository Heading { get; }
     }
