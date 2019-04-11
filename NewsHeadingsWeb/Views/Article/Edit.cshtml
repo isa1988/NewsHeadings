@@ -55,7 +55,16 @@
         </div>
     </div>
 
-    <input type="file" name="file" /><br>
+    <div id="dropZone">
+        Для загрузки, перетащите файл сюда.
+    </div>
+    <br>
+    <input type="file" id ="file" name="file" accept=".jpg, .jpeg, .png"/><br>
+        
+    <div id="imageContent">
+
+    </div>
+    <br>
 
     @if (@Model.ErrorMessage != null && @Model.ErrorMessage != string.Empty)
     {
