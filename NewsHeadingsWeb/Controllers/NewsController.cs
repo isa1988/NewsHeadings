@@ -43,7 +43,17 @@ namespace NewsHeadingsWeb.Controllers
             }
             else
             {
-                headingModel.Articles = null;
+                List<ArticleModel> articlesResults = dp.Article.GetAll()
+                    .Select(x => new Models.ArticleModel()
+                    {
+                        ID = x.ID,
+                        Name = x.Name,
+                        Text = x.Text,
+                        Author = x.Author,
+                        DateCreate = x.DateCreate,
+                        FileName = x.FileName
+                    }).ToList();
+                headingModel.Articles = articlesResults;
             }
             return View(headingModel);
         }
