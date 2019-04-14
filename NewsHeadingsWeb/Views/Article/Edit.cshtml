@@ -1,7 +1,7 @@
 ﻿@model NewsHeadingsWeb.Models.ArticleModel
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutArticle.cshtml";
 }
 <h2>@Model.Title</h2>
 
@@ -46,7 +46,7 @@
             @Html.ValidationMessageFor(model => model.HeadingID, "", new { @class = "text-danger" })
         </div>
     </div>
-    
+
     <div class="form-group">
         @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -55,14 +55,34 @@
         </div>
     </div>
 
-    <div id="dropZone">
-        Для загрузки, перетащите файл сюда.
+    <div class="form-group">
+        <div class="col-md-10">
+            @if (Model.FileName?.Length > 0)
+            {
+                <p>текущая картинка</p>
+                <img src="@Url.Content("~/Media/" + Model.FileName)" class="img-fluid img-thumbnail" />
+            }
+        </div>
     </div>
-    <br>
-    <input type="file" id ="file" name="file" accept=".jpg, .jpeg, .png"/><br>
-        
-    <div id="imageContent">
 
+    <div class="form-group">
+        <div class="col-md-10" id="dropZone">
+            Для загрузки, перетащите файл сюда.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png" /><br>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <div id="imageContent">
+
+            </div>
+        </div>
     </div>
     <br>
 
@@ -72,7 +92,7 @@
             <p class="text-danger"> Ошибка: @Model.ErrorMessage </p>
         </div>
     }
-    
+
     <p></p>
 
     <div class="form-group col-md-offset-2 col-md-10">

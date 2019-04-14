@@ -115,10 +115,14 @@
       <DependentUpon>NewsHeadings.mdf</DependentUpon>
     </Content>
     <Content Include="CSS\bootstrap.min.css" />
+    <Content Include="CSS\jquery-ui.min.css" />
     <Content Include="CSS\MyStyles.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\logo.jpg" />
     <Content Include="JS\bootstrap.min.js" />
+    <Content Include="JS\helperFun.js" />
     <Content Include="JS\jquery-3.3.1.min.js" />
+    <Content Include="JS\jquery-ui.min.js" />
     <Content Include="JS\workToFile.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -148,10 +152,14 @@
     <Content Include="Views\Article\Insert.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
-    <Content Include="Views\Article\Delete.cshtml" />
     <Content Include="Views\Heading\Delete.cshtml" />
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Error\Default.cshtml" />
+    <Content Include="Views\Shared\_LayoutArticle.cshtml" />
+    <Content Include="Views\Heading\Success.cshtml" />
+    <Content Include="Views\Heading\DeleteImfo.cshtml" />
+    <Content Include="Views\Article\DeleteImfo.cshtml" />
+    <Content Include="Views\Article\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

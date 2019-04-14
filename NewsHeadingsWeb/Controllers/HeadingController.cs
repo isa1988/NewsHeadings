@@ -11,27 +11,28 @@ namespace NewsHeadingsWeb.Controllers
 {
     public class HeadingController : Controller
     {
-        [HttpGet]
         public ActionResult Insert()
         {
-            return View(new HeadingModel{Title = "Добавление рублики" });
+            return PartialView("Insert", new HeadingModel{Title = "Добавление рублики" });
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Insert(HeadingModel heading)
         {
-            var db = new MainWorker();
-            db.Heading.Insert(new HeadingInfo
+            if (ModelState.IsValid)
             {
-                 ID = heading.ID,
-                 Name = heading.Name
-            });
-            return Redirect("/News/Show");
-
-
+                var db = new MainWorker();
+                db.Heading.Insert(new HeadingInfo
+                {
+                    ID = heading.ID,
+                    Name = heading.Name
+                });
+                return PartialView("Success");
+            }
+            return PartialView(heading);
         }
 
-        [HttpGet]
         public ActionResult Edit(int id)
         {
             var dp = new MainWorker();
@@ -43,22 +44,26 @@ namespace NewsHeadingsWeb.Controllers
                 PathLink = headingInfo.PathLink,
                 Title = "Редактирование рублики"
             };
-            return View(headingModel);
+            return PartialView(headingModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(HeadingModel heading)
         {
-            var db = new MainWorker();
-            db.Heading.Edit(new HeadingInfo
+            if (ModelState.IsValid)
+            {
+                var db = new MainWorker();
+                db.Heading.Edit(new HeadingInfo
                 {
                     ID = heading.ID,
                     Name = heading.Name
                 });
-            return Redirect("/News/Show");
+                return PartialView("Success");
+            }
+            return PartialView(heading);
         }
 
-        [HttpGet]
         public ActionResult Delete(int id)
         {
             var dp = new MainWorker();
@@ -70,15 +75,20 @@ namespace NewsHeadingsWeb.Controllers
                 PathLink = headingInfo.PathLink,
                 Title = "Удаление рублики"
             };
-            return View(headingModel);
+            return PartialView(headingModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(HeadingModel heading)
         {
-            var db = new MainWorker();
-            db.Heading.Delete(heading.ID);
-            return Redirect("/News/Show");
+            if (ModelState.IsValid)
+            {
+                var db = new MainWorker();
+                db.Heading.Delete(heading.ID);
+                return PartialView("DeleteImfo");
+            }
+            return PartialView(heading);
         }
     }
 }

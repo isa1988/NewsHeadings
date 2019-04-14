@@ -1,7 +1,7 @@
 ﻿@model NewsHeadingsWeb.Models.HeadingModel
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <h2>@Model.Title</h2>
@@ -20,19 +20,9 @@
         </dd>
 
     </dl>
-    <p></p>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        if (Model.ErrorMessage != null && Model.ErrorMessage != string.Empty)
-        {
-            <div class="form-group">
-                <p class="text-danger"> Ошибка: @Model.ErrorMessage </p>
-            </div>
-        }
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-success" /> |
-            <a href="/News/Show" class="btn btn-success">Назад</a>
-        </div>
+        @Html.ValidationSummary(true)
     }
 </div>

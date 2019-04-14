@@ -10,35 +10,47 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar1">
+        <a class="navbar-brand" href="/News/Show"><img src="~/Images/logo.jpg" class="logoImg" alt="Новости всегда с вами"></a>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link active" href="/News/Show">Главная <span class="sr-only">(current)</span></a>
-            </li>
             @foreach (NewsHeadingsWeb.Models.HeadingModel rec in @Model.Headings)
             {
                 <li class="nav-item">
-                    <a class="nav-link" href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})>@rec.Name</a>
+                    <a href=@Url.Action("Show", "News", new {pathLink = rec.PathLink})
+                       class="nav-link @(Model.Name == rec.Name ? "active" : string.Empty)">@rec.Name</a>
                 </li>
             }
             <li class="nav-item">
-                <a class="nav-link" href="/Heading/Insert">Добавить </a>
+                @Html.ActionLink("Добавить", "Insert", "Heading", new { }, new { @class = "nav-link linkToPage",
+                    data_dialog_title = "Создание модели",
+                    data_dialog_url = Url.Action("Insert", "Heading")})
             </li>
         </ul>
     </div>
 </nav>
-<h1>@Model.Title</h1>
-<p>новости, которые всегда с вами</p>
+
 @if (@Model.ID != 0)
 {
     <h3>Рубрика @Model.Name</h3>
-    <a href=@Url.Action("Edit", "Heading", new {id = @Model.ID}) class="btn btn-info">Редактировать рубрику</a>
-    <a href=@Url.Action("Delete", "Heading", new {id = @Model.ID}) class="btn btn-info">Удалить рубрику</a>
-    <a href=@Url.Action("Insert", "Article", new {headingID = @Model.ID}) class="btn btn-info">Добавить статью</a>
+    @Html.ActionLink("Редактировать", "Edit", "Heading", new { id = Model.ID },
+        new {
+            @class = "btn btn-info linkToPage",
+            data_dialog_title = "Редактирование рубрики",
+            data_dialog_url = Url.Action("Edit", "Heading")
+        })
+
+    @Html.ActionLink("Удалить рубрику", "Delete", "Heading", new { id = @Model.ID },
+        new {
+            @class = "btn btn-info linkToPage",
+            data_dialog_title = "Удаление рубрики",
+            data_dialog_url = Url.Action("Delete/" + Model.ID, "Heading")
+        })
+
+    @Html.ActionLink("Добавить статью", "Insert", "Article", new { headingID = @Model.ID }, new{  @class = "btn btn-info" })
 }
 @if (@Model.Articles?.Count > 0)
 {
     <p></p>
-    foreach (var articlesList in Model.Articles.Select((item, index) => new {item, index})
+    foreach (var articlesList in Model.Articles.Select((item, index) => new { item, index })
         .GroupBy(x => x.index / 3)
         .Select(g => g.Select(x => x.item)))
     {
@@ -49,7 +61,7 @@
                 <div class="col-4">
                     <div class="row row-conformity">
                         <div class="col-12">
-                            <h1>@rec.Name</h1><br/>
+                            <h1>@rec.Name</h1><br />
                         </div>
                     </div>
                 </div>
@@ -62,8 +74,15 @@
                 <div class="col-4">
                     <div class="row row-conformity">
                         <div class="col-12">
-                            <a href=@Url.Action("Edit", "Article", new {id = rec.ID}) class="btn btn-info">редактировать</a>
-                            <a href=@Url.Action("Delete", "Article", new {id = rec.ID}) class="btn btn-info">удалить</a>
+                            
+                            @Html.ActionLink("Редактировать", "Edit", "Article", new { id = rec.ID }, new{  @class = "btn btn-info" })
+
+                            @Html.ActionLink("Удалить", "Delete", "Article", new {id = rec.ID}, new
+                            {
+                                @class = "btn btn-info linkToPage",
+                                data_dialog_title = "Удаление статьи",
+                                data_dialog_url = Url.Action("Delete/" + rec.ID, "Article")
+                            })
                         </div>
                     </div>
                 </div>
@@ -76,7 +95,7 @@
                     <p>от @rec.DateCreate.ToString("dd.MM.yyyy HH:mm:ss")</p>
                     @if (rec.FileName?.Length > 0)
                     {
-                        <img src="@Url.Content("~/Media/" + rec.FileName)" class="img-fluid img-thumbnail"/>
+                        <img src="@Url.Content("~/Media/" + rec.FileName)" class="img-fluid img-thumbnail" />
                     }
                     <p class="word">@rec.Text</p>
                     <p class="text-right font-italic">автор @rec.Author</p>
@@ -84,4 +103,5 @@
             }
         </div>
     }
+
 }

@@ -86,7 +86,6 @@ namespace NewsHeadingsWeb.Controllers
             worker.Article.Edit(articleInfo);
             return Redirect("/News/Show");
         }
-
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -111,18 +110,13 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Delete(ArticleModel article)
         {
-            var worker = new MainWorker();
-            ArticleInfo articleInfo = new ArticleInfo
+            if (ModelState.IsValid)
             {
-                ID = article.ID,
-                Name = article.Name,
-                Author = article.Author,
-                Text = article.Text,
-                HeadingID = article.HeadingID,
-                IsDelete = article.IsDelete
-            };
-            worker.Article.Delete(articleInfo.ID);
-            return Redirect("/News/Show");
+                var worker = new MainWorker();
+                worker.Article.Delete(article.ID);
+                return PartialView("DeleteImfo");
+            }
+            return PartialView(article);
         }
     }
 }
