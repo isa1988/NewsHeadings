@@ -9,7 +9,7 @@ namespace DataBase.DataModel
     public class ArticleInfo
     {
         /// <summary>
-        /// Индефикатор
+        /// Идентификатор
         /// </summary>
         public int ID { get; set; }
         /// <summary>

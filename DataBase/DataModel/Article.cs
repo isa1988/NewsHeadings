@@ -5,12 +5,12 @@ using System.ComponentModel;
 namespace DataBase.DataModel
 {
     /// <summary>
-    /// Статьи новостей 
+    /// Статьи новостей описание модели в БД
     /// </summary>
     class Article
     {
         /// <summary>
-        /// Индефикатор
+        /// Идентификатор
         /// </summary>
         public int ID { get; set; }
         /// <summary>

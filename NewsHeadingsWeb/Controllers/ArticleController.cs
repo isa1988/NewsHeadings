@@ -35,7 +35,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Insert(ArticleModel article, HttpPostedFileBase file)
         {
-            var worker = new MainWorker();
+            var worker = new DataProvider();
             ArticleInfo articleInfo = new ArticleInfo
             {
                 ID = article.ID,
@@ -64,7 +64,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var worker = new MainWorker();
+            var worker = new DataProvider();
             ArticleInfo articleInfo = worker.Article.GetByID(id);
             ArticleModel articleModel = new ArticleModel
             {
@@ -92,7 +92,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Edit(ArticleModel article, HttpPostedFileBase file)
         {
-            var worker = new MainWorker();
+            var worker = new DataProvider();
             ArticleInfo articleInfo = new ArticleInfo
             {
                 ID = article.ID,
@@ -120,7 +120,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var worker = new MainWorker();
+            var worker = new DataProvider();
             ArticleInfo articleInfo = worker.Article.GetByID(id);
             ArticleModel articleModel = new ArticleModel
             {
@@ -148,7 +148,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var worker = new MainWorker();
+                var worker = new DataProvider();
                 worker.Article.Delete(article.ID);
                 return PartialView("DeleteImfo");
             }

@@ -5,14 +5,14 @@ namespace DataBase.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataBase.DataModel.MainContent>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataBase.DataModel.DataContent>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataBase.DataModel.MainContent context)
+        protected override void Seed(DataBase.DataModel.DataContent context)
         {
             //  This method will be called after migrating to the latest version.
 

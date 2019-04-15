@@ -12,7 +12,7 @@ namespace NewsHeadingsWeb.Models
     public class ArticleModel : PageModel
     {
         /// <summary>
-        /// Индефикатор
+        /// Идентификатор
         /// </summary>
         public int ID { get; set; }
         /// <summary>
@@ -55,7 +55,7 @@ namespace NewsHeadingsWeb.Models
         public byte[] FileMain { get; set; }
 
         /// <summary>
-        /// ID рурики к которой относиться данная статья
+        /// ID рубрики к которой относиться данная статья
         /// </summary>
         [DisplayName("Рубрика")]
         public int HeadingID { get; set; }

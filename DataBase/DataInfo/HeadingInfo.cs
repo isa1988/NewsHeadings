@@ -9,7 +9,7 @@ namespace DataBase.DataModel
     public class HeadingInfo
     {
         /// <summary>
-        /// Индефикатор
+        /// Идентификатор
         /// </summary>
         public int ID { get; set; }
         /// <summary>

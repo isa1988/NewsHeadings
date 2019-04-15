@@ -40,3 +40,13 @@ textarea{
     height: 100%;
     width: 100%;
 }
+
+.ui-widget-overlay {
+    background: #000;
+    opacity: 0.5;
+    -moz-opacity: 0.5;
+    filter: alpha(opacity=50);
+    left: 0;
+    position: fixed;
+    top: 0;
+}

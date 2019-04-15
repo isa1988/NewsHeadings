@@ -11,42 +11,54 @@ namespace DataBase.Contract
         /// <summary>
         /// Добавление новой статьи 
         /// </summary>
-        /// <param name="name">Наименование</param>
-        /// <param name="text">Текст</param>
+        /// <param name="name">Наимование</param>
+        /// <param name="text">Тест статьи</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDeleteFile">Удаление файла при редактирование</param>
         void Insert(string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
+        
         /// <summary>
         /// Добавление новой статьи 
         /// </summary>
+        /// <param name="article">Модель статьи</param>
         void Insert(ArticleInfo article);
 
         /// <summary>
         /// Редактирование статьи
         /// </summary>
-        /// <param name="id">Индефикатор</param>
-        /// <param name="name">Наименование</param>
-        /// <param name="text">Текст</param>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="name">Наимование</param>
+        /// <param name="text">Тест статьи</param>
         /// <param name="autor">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
+        /// <param name="nameFile">Наимование файла</param>
+        /// <param name="file">Файл</param>
+        /// <param name="isDeleteFile">Удаление файла при редактирование</param>
         void Edit(int id, string name, string text, string autor, int headingID, string nameFile, byte[] file, bool isDeleteFile);
+
         /// <summary>
         /// Редактирование статьи 
         /// </summary>
+        /// <param name="article">Модель статьи</param>
         void Edit(ArticleInfo article);
+        
         /// <summary>
         /// Удаление статьи
         /// </summary>
-        /// <param name="id">Индефикатор</param>
+        /// <param name="id">Идентификатор</param>
         void Delete(int id);
 
         /// <summary>
-        /// Получить всех статей
+        /// Получить все статьи
         /// </summary>        
         List<ArticleInfo> GetAll();
         /// <summary>
-        /// Получить объекта по индефикатору
-        /// </summary>        
+        /// Получить объект по Идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
         ArticleInfo GetByID(int id);
         /// <summary>
         /// Получить статей по определенной рубрики

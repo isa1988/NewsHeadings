@@ -7,30 +7,40 @@ using DataBase.DataModel;
 
 namespace DataBase.Working
 {
+    /// <summary>
+    /// Работа с рубриками
+    /// </summary>
     public class HeadingWorker : IHeadingRepository
     {
 
-        private MainContent mainContent;
+        private DataContent _dataContent;
         private Heading heading;
 
-        public HeadingWorker(object mainContent)
+        /// <summary>
+        /// Работа с рубриками
+        /// </summary>
+        /// <param name="dataContent">работа с базой</param>
+        public HeadingWorker(object dataontent)
         {
-            if (mainContent is MainContent) this.mainContent = (MainContent)mainContent;
-        }
-
-        public HeadingWorker()
-        {
-            mainContent = new MainContent();
+            if (dataontent is DataContent) this._dataContent = (DataContent)dataontent;
         }
 
         /// <summary>
-        /// Вернуть все статьи по рублики
+        /// Работа с рубриками
         /// </summary>
-        /// <param name="headingID">Ссылка на рублику</param>
+        public HeadingWorker()
+        {
+            _dataContent = new DataContent();
+        }
+
+        /// <summary>
+        /// Получить статей по определенной рубрики
+        /// </summary>
+        /// <param name="headingID">Ссылка на рубрику</param>
         /// <returns></returns>
         public List<ArticleInfo> ArticleByHeading(int headingID)
         {
-            return mainContent.Articles.Where(m => m.HeadingID == headingID).Select(x => new ArticleInfo
+            return _dataContent.Articles.Where(m => m.HeadingID == headingID).Select(x => new ArticleInfo
             {
                 ID = x.ID,
                 Name = x.Name,
@@ -43,12 +53,12 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Вернуть все статьи
+        /// Получить все рубрики
         /// </summary>
         /// <returns></returns>
         public List<HeadingInfo> GetAll()
         {
-            return mainContent.Headings.Select(x => new HeadingInfo
+            return _dataContent.Headings.Select(x => new HeadingInfo
             {
                 ID = x.ID,
                 Name = x.Name,
@@ -58,12 +68,13 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Возвратить объект по индефикатору
+        /// Получить объект по Идентификатору
         /// </summary>
         /// <returns></returns>
+        /// <param name="id">Идентификатор</param>
         public HeadingInfo GetByID(int id)
         {
-            Heading headingTemp = mainContent.Headings.FirstOrDefault(n => n.ID == id);
+            Heading headingTemp = _dataContent.Headings.FirstOrDefault(n => n.ID == id);
             if (headingTemp != null)
             {
                 return new HeadingInfo
@@ -77,12 +88,13 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Возвратить объект по пути
+        /// Получить объект по пути
         /// </summary>
         /// <returns></returns>
+        /// <param name="pathLink">Путь</param>
         public HeadingInfo GetByPathLink(string pathLink)
         {
-            Heading headingTemp = mainContent.Headings.FirstOrDefault(n => n.PathLink == pathLink);
+            Heading headingTemp = _dataContent.Headings.FirstOrDefault(n => n.PathLink == pathLink);
             if (headingTemp != null)
             {
                 return new HeadingInfo
@@ -96,7 +108,7 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Добавить новую рублику
+        /// Добавление новой рубрики
         /// </summary>
         /// <param name="name">Наименование</param>
         public void Insert(string name)
@@ -108,9 +120,9 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Добавить новой рублики
+        /// Добавление новой рубрики
         /// </summary>
-        /// <param name="heading"></param>
+        /// <param name="heading">Модель рубрики</param>
         public void Insert(HeadingInfo heading)
         {
             if (heading == null)
@@ -119,13 +131,13 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Редактирование рублики
+        /// Редактирование рубрики
         /// </summary>
-        /// <param name="id">Индефикатор</param>
+        /// <param name="id">Идентификатор</param>
         /// <param name="name">Наименование</param>
         public void Edit(int id, string name)
         {
-            heading = mainContent.Headings.FirstOrDefault(x => x.ID == id);
+            heading = _dataContent.Headings.FirstOrDefault(x => x.ID == id);
             if (heading == null)
                 throw new ArgumentException("Не найден объект");
             if (name == null) name = string.Empty;
@@ -135,9 +147,9 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Редактирование рублики
+        /// Редактирование рубрики
         /// </summary>
-        /// <param name="heading"></param>
+        /// <param name="heading">Модель рубрики</param>
         public void Edit(HeadingInfo heading)
         {
             if (heading == null)
@@ -146,25 +158,26 @@ namespace DataBase.Working
         }
 
         /// <summary>
-        /// Проверка
+        /// Проверка входных данных при создание/редактирование
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Наименование</param>
+        /// <param name="linkPath">Путь</param>
         private void Check(string name, string linkPath)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Не заполнено наименование");
             if (heading == null)
             {
-                if (mainContent.Headings.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower()))
+                if (_dataContent.Headings.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
                     throw new ArgumentException("Текущее наименование уже используется");
-                if (mainContent.Headings.Any(x => x.PathLink == linkPath))
+                if (_dataContent.Headings.Any(x => x.PathLink == linkPath))
                     throw new ArgumentException("Текущий путь уже используется");
             }
             else
             {
-                if (mainContent.Headings.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower() && x.ID != heading.ID))
+                if (_dataContent.Headings.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && x.ID != heading.ID))
                     throw new ArgumentException("Текущее наименование уже используется");
-                if (mainContent.Headings.Any(x => x.PathLink == linkPath && x.ID != heading.ID))
+                if (_dataContent.Headings.Any(x => x.PathLink == linkPath && x.ID != heading.ID))
                     throw new ArgumentException("Текущий путь уже используется");
             }
         }
@@ -178,23 +191,23 @@ namespace DataBase.Working
             if (isNew) heading = new Heading();
             heading.Name = name.Trim();
             heading.PathLink = linkPath;
-            if (isNew) mainContent.Headings.Add(heading);
-            mainContent.SaveChanges();
+            if (isNew) _dataContent.Headings.Add(heading);
+            _dataContent.SaveChanges();
         }
         /// <summary>
-        /// Удаление рублики 
+        /// Удаление рубрики 
         /// </summary>
-        /// <param name="id">Индефикатор</param>
+        /// <param name="id">Идентификатор</param>
         public void Delete(int id)
         {
-            heading = mainContent.Headings.FirstOrDefault(x => x.ID == id);
+            heading = _dataContent.Headings.FirstOrDefault(x => x.ID == id);
             if (heading == null)
                 throw new ArgumentException("Не найден объект");
             List<ArticleInfo> articleList = ArticleByHeading(id);
             if (articleList != null && articleList.Count > 0)
-                throw new ArgumentException("В данной рублике есть статьи");
-            mainContent.Headings.Remove(heading);
-            mainContent.SaveChanges();
+                throw new ArgumentException("В данной рубрике есть статьи");
+            _dataContent.Headings.Remove(heading);
+            _dataContent.SaveChanges();
         }
 
         private string GetPathLink(string line)

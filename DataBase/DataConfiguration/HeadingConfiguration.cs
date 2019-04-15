@@ -4,6 +4,9 @@ using DataBase.DataModel;
 
 namespace DataBase.DataConfiguration
 {
+    /// <summary>
+    /// Структура таблицы рубрики
+    /// </summary>
     class HeadingConfiguration : EntityTypeConfiguration<Heading>
     {
         public HeadingConfiguration()

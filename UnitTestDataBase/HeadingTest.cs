@@ -15,7 +15,7 @@ namespace UnitTestDataBase
         [TestMethod]
         public void GetFullAll()
         {
-            var dp = new MainWorker();
+            var dp = new DataProvider();
             try
             {
 

@@ -22,7 +22,7 @@ namespace NewsHeadingsWeb.Controllers
         // GET: Home
         public ActionResult Show(string pathLink)
         {
-            var dp = new MainWorker();
+            var dp = new DataProvider();
             HeadingModel headingModel = new HeadingModel();
             headingModel.Title = "Новости 24";
             headingModel.Headings = dp.Heading.GetAll().Select(x => new Models.HeadingModel()

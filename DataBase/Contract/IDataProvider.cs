@@ -1,6 +1,9 @@
 ﻿
 namespace DataBase.Contract
 {
+    /// <summary>
+    /// Операции с данными
+    /// </summary>
     public interface IDataProvider
     {
         /// <summary>

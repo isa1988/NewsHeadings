@@ -3,6 +3,9 @@ using DataBase.DataModel;
 
 namespace DataBase.DataConfiguration
 {
+    /// <summary>
+    /// Структура таблицы статьи 
+    /// </summary>
     class ArticleConfiguration : EntityTypeConfiguration<Article>
     {
         public ArticleConfiguration()

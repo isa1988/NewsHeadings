@@ -4,12 +4,12 @@ using System.ComponentModel;
 namespace DataBase.DataModel
 {
     /// <summary>
-    /// Рубрика yjdjcntq
+    /// Рубрика описание модели в БД
     /// </summary>
     class Heading
     {
         /// <summary>
-        /// Индефикатор
+        /// Идентификатор
         /// </summary>
         public int ID { get; set; }
         /// <summary>

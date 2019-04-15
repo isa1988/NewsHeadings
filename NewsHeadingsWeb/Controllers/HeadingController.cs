@@ -34,7 +34,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new MainWorker();
+                var db = new DataProvider();
                 db.Heading.Insert(new HeadingInfo
                 {
                     ID = heading.ID,
@@ -52,7 +52,7 @@ namespace NewsHeadingsWeb.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var dp = new MainWorker();
+            var dp = new DataProvider();
             HeadingInfo headingInfo = dp.Heading.GetByID(id);
             HeadingModel headingModel = new HeadingModel
             {
@@ -75,7 +75,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new MainWorker();
+                var db = new DataProvider();
                 db.Heading.Edit(new HeadingInfo
                 {
                     ID = heading.ID,
@@ -93,7 +93,7 @@ namespace NewsHeadingsWeb.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var dp = new MainWorker();
+            var dp = new DataProvider();
             HeadingInfo headingInfo = dp.Heading.GetByID(id);
             HeadingModel headingModel = new HeadingModel
             {
@@ -116,7 +116,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new MainWorker();
+                var db = new DataProvider();
                 db.Heading.Delete(heading.ID);
                 return PartialView("DeleteImfo");
             }
