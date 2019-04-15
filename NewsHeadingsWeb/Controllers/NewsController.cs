@@ -9,8 +9,16 @@ using NewsHeadingsWeb.Models;
 
 namespace NewsHeadingsWeb.Controllers
 {
+    /// <summary>
+    /// Главная страница контроллер
+    /// </summary>
     public class NewsController : Controller
     {
+        /// <summary>
+        /// Покатать даннык
+        /// </summary>
+        /// <param name="pathLink">Путь из модели рубрик</param>
+        /// <returns></returns>
         // GET: Home
         public ActionResult Show(string pathLink)
         {
@@ -24,7 +32,7 @@ namespace NewsHeadingsWeb.Controllers
                 PathLink = x.PathLink
             }).ToList();
             HeadingInfo headingInfo = dp.Heading.GetByPathLink(pathLink);
-            if (headingInfo != null)
+            if (headingInfo != null) // если не нашел рубрику то показать все статьи
             {
                 headingModel.ID = headingInfo.ID;
                 headingModel.Name = headingInfo.Name;
@@ -41,7 +49,7 @@ namespace NewsHeadingsWeb.Controllers
                     }).ToList();
                 headingModel.Articles = articlesResults;
             }
-            else
+            else // если нашел рубрику то показать все статьи данной рубрикм
             {
                 List<ArticleModel> articlesResults = dp.Article.GetAll()
                     .Select(x => new Models.ArticleModel()

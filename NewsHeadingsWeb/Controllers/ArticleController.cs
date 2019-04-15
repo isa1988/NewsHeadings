@@ -9,8 +9,16 @@ using NewsHeadingsWeb.Models;
 
 namespace NewsHeadingsWeb.Controllers
 {
+    /// <summary>
+    /// Статьи контроллер
+    /// </summary>
     public class ArticleController : Controller
     {
+        /// <summary>
+        /// Добавить статью
+        /// </summary>
+        /// <param name="headingID">ID рубрики</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Insert(int headingID)
         {
@@ -18,6 +26,12 @@ namespace NewsHeadingsWeb.Controllers
                                           Title = "Добавление статьи" });
         }
         
+        /// <summary>
+        /// Post метод для добавления статьи 
+        /// </summary>
+        /// <param name="article">Модель статьи</param>
+        /// <param name="file">Работа с файлом</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Insert(ArticleModel article, HttpPostedFileBase file)
         {
@@ -42,6 +56,11 @@ namespace NewsHeadingsWeb.Controllers
 
         }
 
+        /// <summary>
+        /// Редактирование статьи
+        /// </summary>
+        /// <param name="id">ID статьи</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -64,6 +83,12 @@ namespace NewsHeadingsWeb.Controllers
             return View(articleModel);
         }
 
+        /// <summary>
+        /// Post метод для редактирование статьи
+        /// </summary>
+        /// <param name="article">Модель статьи</param>
+        /// <param name="file">Работа с файлами</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(ArticleModel article, HttpPostedFileBase file)
         {
@@ -86,6 +111,12 @@ namespace NewsHeadingsWeb.Controllers
             worker.Article.Edit(articleInfo);
             return Redirect("/News/Show");
         }
+
+        /// <summary>
+        /// Удаление статьи
+        /// </summary>
+        /// <param name="id">ID статьи</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -107,6 +138,11 @@ namespace NewsHeadingsWeb.Controllers
             return View(articleModel);
         }
 
+        /// <summary>
+        /// Post метод для удаления статьи
+        /// </summary>
+        /// <param name="article">Модель статьи</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Delete(ArticleModel article)
         {

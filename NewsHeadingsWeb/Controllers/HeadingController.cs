@@ -9,13 +9,25 @@ using NewsHeadingsWeb.Models;
 
 namespace NewsHeadingsWeb.Controllers
 {
+    /// <summary>
+    /// Рубрика контроллер
+    /// </summary>
     public class HeadingController : Controller
     {
+        /// <summary>
+        /// Добавление рубрики
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Insert()
         {
-            return PartialView("Insert", new HeadingModel{Title = "Добавление рублики" });
+            return PartialView("Insert", new HeadingModel{Title = "Добавление рубрики" });
         }
 
+        /// <summary>
+        /// Post метод для добавление рубрики
+        /// </summary>
+        /// <param name="heading">Модель рубрики</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Insert(HeadingModel heading)
@@ -33,6 +45,11 @@ namespace NewsHeadingsWeb.Controllers
             return PartialView(heading);
         }
 
+        /// <summary>
+        /// Редактирование рубрики
+        /// </summary>
+        /// <param name="id">ID рубрики</param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             var dp = new MainWorker();
@@ -42,11 +59,16 @@ namespace NewsHeadingsWeb.Controllers
                 ID = headingInfo.ID,
                 Name = headingInfo.Name,
                 PathLink = headingInfo.PathLink,
-                Title = "Редактирование рублики"
+                Title = "Редактирование рубрики"
             };
             return PartialView(headingModel);
         }
 
+        /// <summary>
+        /// Post метод для редактирования рубрики
+        /// </summary>
+        /// <param name="heading">Модель рурики</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(HeadingModel heading)
@@ -64,6 +86,11 @@ namespace NewsHeadingsWeb.Controllers
             return PartialView(heading);
         }
 
+        /// <summary>
+        /// Удаление рубрики 
+        /// </summary>
+        /// <param name="id">ID рубрики</param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             var dp = new MainWorker();
@@ -73,11 +100,16 @@ namespace NewsHeadingsWeb.Controllers
                 ID = headingInfo.ID,
                 Name = headingInfo.Name,
                 PathLink = headingInfo.PathLink,
-                Title = "Удаление рублики"
+                Title = "Удаление рубрики"
             };
             return PartialView(headingModel);
         }
 
+        /// <summary>
+        /// Post метод для удаления рублрики
+        /// </summary>
+        /// <param name="heading">Модель рубрики</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(HeadingModel heading)

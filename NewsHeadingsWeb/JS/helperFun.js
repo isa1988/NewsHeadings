@@ -11,6 +11,9 @@ $(document).ready(function () {
             .appendTo("body")
             .load(this.href)
             .dialog({
+                maxWidth: 550,
+                minWidth: 50,
+                width: 550,
                 title: $(this).attr("data-dialog-title"),
                 close: function () { $(this).remove() },
                 modal: true,

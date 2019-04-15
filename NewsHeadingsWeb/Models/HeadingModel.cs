@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace NewsHeadingsWeb.Models
 {
     /// <summary>
-    /// Рублика модель
+    /// Рубрика модель
     /// </summary>
     public class HeadingModel : PageModel
     {
@@ -23,9 +23,12 @@ namespace NewsHeadingsWeb.Models
         /// </summary>
         [DisplayName("Путь в адресной строки")]
         public string PathLink { get; set; }
+        /// <summary>
+        /// Статьи к данной рубрики 
+        /// </summary>
         public List<ArticleModel> Articles { get; set; }
         /// <summary>
-        /// Список рублик
+        /// Список рубрик
         /// </summary>
         public List<HeadingModel> Headings { get; set; }
         public override string ToString()

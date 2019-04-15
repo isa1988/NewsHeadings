@@ -21,7 +21,7 @@
             }
             <li class="nav-item">
                 @Html.ActionLink("Добавить", "Insert", "Heading", new { }, new { @class = "nav-link linkToPage",
-                    data_dialog_title = "Создание модели",
+                    data_dialog_title = "Создание рубрики",
                     data_dialog_url = Url.Action("Insert", "Heading")})
             </li>
         </ul>
@@ -31,21 +31,27 @@
 @if (@Model.ID != 0)
 {
     <h3>Рубрика @Model.Name</h3>
-    @Html.ActionLink("Редактировать", "Edit", "Heading", new { id = Model.ID },
-        new {
-            @class = "btn btn-info linkToPage",
-            data_dialog_title = "Редактирование рубрики",
-            data_dialog_url = Url.Action("Edit", "Heading")
-        })
 
-    @Html.ActionLink("Удалить рубрику", "Delete", "Heading", new { id = @Model.ID },
-        new {
-            @class = "btn btn-info linkToPage",
-            data_dialog_title = "Удаление рубрики",
-            data_dialog_url = Url.Action("Delete/" + Model.ID, "Heading")
-        })
+        <div class="row row-conformity">
+            <div class="col-12">
 
-    @Html.ActionLink("Добавить статью", "Insert", "Article", new { headingID = @Model.ID }, new{  @class = "btn btn-info" })
+                @Html.ActionLink("Редактировать", "Edit", "Heading", new { id = Model.ID },
+                    new {
+                        @class = "btn btn-info linkToPage",
+                        data_dialog_title = "Редактирование рубрики",
+                        data_dialog_url = Url.Action("Edit", "Heading")
+                    })
+
+                @Html.ActionLink("Удалить рубрику", "Delete", "Heading", new { id = @Model.ID },
+                    new {
+                        @class = "btn btn-info linkToPage",
+                        data_dialog_title = "Удаление рубрики",
+                        data_dialog_url = Url.Action("Delete/" + Model.ID, "Heading")
+                    })
+
+                @Html.ActionLink("Добавить статью", "Insert", "Article", new { headingID = @Model.ID }, new{  @class = "btn btn-info" })
+            </div>
+        </div>
 }
 @if (@Model.Articles?.Count > 0)
 {

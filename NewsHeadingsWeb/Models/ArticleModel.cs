@@ -54,8 +54,14 @@ namespace NewsHeadingsWeb.Models
         /// </summary>
         public byte[] FileMain { get; set; }
 
+        /// <summary>
+        /// ID рурики к которой относиться данная статья
+        /// </summary>
         [DisplayName("Рубрика")]
         public int HeadingID { get; set; }
+        /// <summary>
+        /// Рубрика к которой относиться данная статья
+        /// </summary>
         public HeadingModel HeadingCurr { get; set; }
         /// <summary>
         /// Список рубрик для DropDownListFor
