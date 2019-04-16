@@ -60,7 +60,7 @@
     <Compile Include="DataInfo\ArticleInfo.cs" />
     <Compile Include="DataInfo\HeadingInfo.cs" />
     <Compile Include="DataModel\Article.cs" />
-    <Compile Include="DataModel\MainContext.cs" />
+    <Compile Include="DataModel\DataContent.cs" />
     <Compile Include="DataModel\Heading.cs" />
     <Compile Include="Media\FolderElement.cs" />
     <Compile Include="Media\FoldersCollection.cs" />

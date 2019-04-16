@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataBase.Contract;
 using DataBase.DataModel;
 using DataBase.Working;
 using NewsHeadingsWeb.Models;
@@ -14,6 +15,16 @@ namespace NewsHeadingsWeb.Controllers
     /// </summary>
     public class HeadingController : Controller
     {
+        private IDataProvider dataProvider;
+
+        /// <summary>
+        /// Рубрика контроллер
+        /// </summary>
+        /// <param name="dataProvider">Работа с данными</param>
+        public HeadingController(IDataProvider dataProvider)
+        {
+            this.dataProvider = dataProvider;
+        }
         /// <summary>
         /// Добавление рубрики
         /// </summary>
@@ -34,8 +45,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new DataProvider();
-                db.Heading.Insert(new HeadingInfo
+                dataProvider.Heading.Insert(new HeadingInfo
                 {
                     ID = heading.ID,
                     Name = heading.Name
@@ -52,8 +62,7 @@ namespace NewsHeadingsWeb.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var dp = new DataProvider();
-            HeadingInfo headingInfo = dp.Heading.GetByID(id);
+            HeadingInfo headingInfo = dataProvider.Heading.GetByID(id);
             HeadingModel headingModel = new HeadingModel
             {
                 ID = headingInfo.ID,
@@ -75,8 +84,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new DataProvider();
-                db.Heading.Edit(new HeadingInfo
+                dataProvider.Heading.Edit(new HeadingInfo
                 {
                     ID = heading.ID,
                     Name = heading.Name
@@ -93,8 +101,7 @@ namespace NewsHeadingsWeb.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var dp = new DataProvider();
-            HeadingInfo headingInfo = dp.Heading.GetByID(id);
+            HeadingInfo headingInfo = dataProvider.Heading.GetByID(id);
             HeadingModel headingModel = new HeadingModel
             {
                 ID = headingInfo.ID,
@@ -116,8 +123,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new DataProvider();
-                db.Heading.Delete(heading.ID);
+                dataProvider.Heading.Delete(heading.ID);
                 return PartialView("DeleteImfo");
             }
             return PartialView(heading);

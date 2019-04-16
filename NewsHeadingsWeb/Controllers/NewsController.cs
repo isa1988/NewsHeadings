@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataBase.Contract;
 using DataBase.DataModel;
 using DataBase.Working;
 using NewsHeadingsWeb.Models;
@@ -14,6 +15,16 @@ namespace NewsHeadingsWeb.Controllers
     /// </summary>
     public class NewsController : Controller
     {
+        private IDataProvider dataProvider;
+
+        /// <summary>
+        /// Главная страница контроллер
+        /// </summary>
+        /// <param name="dataProvider">Работа с данными</param>
+        public NewsController(IDataProvider dataProvider)
+        {
+            this.dataProvider = dataProvider;
+        }
         /// <summary>
         /// Покатать даннык
         /// </summary>
@@ -22,22 +33,21 @@ namespace NewsHeadingsWeb.Controllers
         // GET: Home
         public ActionResult Show(string pathLink)
         {
-            var dp = new DataProvider();
             HeadingModel headingModel = new HeadingModel();
             headingModel.Title = "Новости 24";
-            headingModel.Headings = dp.Heading.GetAll().Select(x => new Models.HeadingModel()
+            headingModel.Headings = dataProvider.Heading.GetAll().Select(x => new Models.HeadingModel()
             {
                 ID = x.ID,
                 Name = x.Name,
                 PathLink = x.PathLink
             }).ToList();
-            HeadingInfo headingInfo = dp.Heading.GetByPathLink(pathLink);
+            HeadingInfo headingInfo = dataProvider.Heading.GetByPathLink(pathLink);
             if (headingInfo != null) // если не нашел рубрику то показать все статьи
             {
                 headingModel.ID = headingInfo.ID;
                 headingModel.Name = headingInfo.Name;
                 headingModel.PathLink = headingInfo.PathLink;
-                List<ArticleModel> articlesResults = dp.Heading.ArticleByHeading(headingModel.ID)
+                List<ArticleModel> articlesResults = dataProvider.Heading.ArticleByHeading(headingModel.ID)
                     .Select(x => new Models.ArticleModel()
                     {
                         ID = x.ID,
@@ -51,7 +61,7 @@ namespace NewsHeadingsWeb.Controllers
             }
             else // если нашел рубрику то показать все статьи данной рубрикм
             {
-                List<ArticleModel> articlesResults = dp.Article.GetAll()
+                List<ArticleModel> articlesResults = dataProvider.Article.GetAll()
                     .Select(x => new Models.ArticleModel()
                     {
                         ID = x.ID,

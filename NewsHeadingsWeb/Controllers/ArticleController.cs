@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataBase.Contract;
 using DataBase.DataModel;
 using DataBase.Working;
 using NewsHeadingsWeb.Models;
@@ -14,6 +15,16 @@ namespace NewsHeadingsWeb.Controllers
     /// </summary>
     public class ArticleController : Controller
     {
+        private IDataProvider dataProvider;
+
+        /// <summary>
+        /// Статьи контроллер
+        /// </summary>
+        /// <param name="dataProvider">Работа с данными</param>
+        public ArticleController(IDataProvider dataProvider)
+        {
+            this.dataProvider = dataProvider;
+        }
         /// <summary>
         /// Добавить статью
         /// </summary>
@@ -35,7 +46,6 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Insert(ArticleModel article, HttpPostedFileBase file)
         {
-            var worker = new DataProvider();
             ArticleInfo articleInfo = new ArticleInfo
             {
                 ID = article.ID,
@@ -51,7 +61,7 @@ namespace NewsHeadingsWeb.Controllers
                 articleInfo.File = new byte[file.ContentLength];
                 file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
             }
-            worker.Article.Insert(articleInfo);
+            dataProvider.Article.Insert(articleInfo);
             return Redirect("/News/Show");
 
         }
@@ -64,8 +74,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var worker = new DataProvider();
-            ArticleInfo articleInfo = worker.Article.GetByID(id);
+            ArticleInfo articleInfo = dataProvider.Article.GetByID(id);
             ArticleModel articleModel = new ArticleModel
             {
                 ID = articleInfo.ID,
@@ -78,7 +87,7 @@ namespace NewsHeadingsWeb.Controllers
                 FileName = articleInfo.FileName
             };
             articleModel.Title = "Редактирование статьи";
-            articleModel.Headings = worker.Heading.GetAll().Select(x =>
+            articleModel.Headings = dataProvider.Heading.GetAll().Select(x =>
                 new SelectListItem { Text = x.Name, Value = x.ID.ToString()}).ToList();
             return View(articleModel);
         }
@@ -92,7 +101,6 @@ namespace NewsHeadingsWeb.Controllers
         [HttpPost]
         public ActionResult Edit(ArticleModel article, HttpPostedFileBase file)
         {
-            var worker = new DataProvider();
             ArticleInfo articleInfo = new ArticleInfo
             {
                 ID = article.ID,
@@ -108,7 +116,7 @@ namespace NewsHeadingsWeb.Controllers
                 articleInfo.File = new byte[file.ContentLength];
                 file.InputStream.Read(articleInfo.File, 0, articleInfo.File.Length);
             }
-            worker.Article.Edit(articleInfo);
+            dataProvider.Article.Edit(articleInfo);
             return Redirect("/News/Show");
         }
 
@@ -120,8 +128,7 @@ namespace NewsHeadingsWeb.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var worker = new DataProvider();
-            ArticleInfo articleInfo = worker.Article.GetByID(id);
+            ArticleInfo articleInfo = dataProvider.Article.GetByID(id);
             ArticleModel articleModel = new ArticleModel
             {
                 ID = articleInfo.ID,
@@ -133,7 +140,7 @@ namespace NewsHeadingsWeb.Controllers
                 IsDelete = articleInfo.IsDelete
             };
             articleModel.Title = "Удаление статьи";
-            articleModel.Headings = worker.Heading.GetAll().Select(x =>
+            articleModel.Headings = dataProvider.Heading.GetAll().Select(x =>
                 new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
             return View(articleModel);
         }
@@ -148,8 +155,7 @@ namespace NewsHeadingsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var worker = new DataProvider();
-                worker.Article.Delete(article.ID);
+                dataProvider.Article.Delete(article.ID);
                 return PartialView("DeleteImfo");
             }
             return PartialView(article);

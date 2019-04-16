@@ -12,7 +12,7 @@ namespace DataBase.Working
         /// <summary>
         /// Работа с базой
         /// </summary>
-        private DataContent _dataContent;
+        private DataContent dataContent;
         private ArticleWorker article;
         private HeadingWorker heading;
 
@@ -21,7 +21,7 @@ namespace DataBase.Working
         /// </summary>
         public DataProvider()
         {
-            _dataContent = new DataContent();
+            dataContent = new DataContent();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace DataBase.Working
         /// </summary>
         public IArticleRepository Article
         {
-            get { return article ?? (article = new ArticleWorker(_dataContent)); }
+            get { return article ?? (article = new ArticleWorker(dataContent)); }
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace DataBase.Working
         /// </summary>
         public IHeadingRepository Heading
         {
-            get { return heading ?? (heading = new HeadingWorker(_dataContent)); }
+            get { return heading ?? (heading = new HeadingWorker(dataContent)); }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace DataBase.Working
     /// </summary>
     public class ArticleWorker : IArticleRepository
     {
-        private DataContent _dataContent;
+        private DataContent dataContent;
         private Article article;
         /// <summary>
         /// Работа с статьями 
@@ -26,14 +26,14 @@ namespace DataBase.Working
         /// <param name="mainContent">работа с базой</param>
         public ArticleWorker(object dataContent)
         {
-            if (dataContent is DataContent) this._dataContent = (DataContent)dataContent;
+            if (dataContent is DataContent) this.dataContent = (DataContent)dataContent;
         }
         /// <summary>
         /// Работа с статьями 
         /// </summary>
         public ArticleWorker()
         {
-            _dataContent = new DataContent();
+            dataContent = new DataContent();
         }
         /// <summary>
         /// Получить статей по определенной рубрики
@@ -42,7 +42,7 @@ namespace DataBase.Working
         /// <returns></returns>
         public List<ArticleInfo> ArticleByHeading(int headingID)
         {
-            return _dataContent.Articles.Where(m => m.HeadingID == headingID).Select(x => new ArticleInfo
+            return dataContent.Articles.Where(m => m.HeadingID == headingID).Select(x => new ArticleInfo
             {
                 ID = x.ID,
                 Name = x.Name,
@@ -60,7 +60,7 @@ namespace DataBase.Working
         /// <returns></returns>
         public List<ArticleInfo> GetAll()
         {
-            return _dataContent.Articles.Select(x => new ArticleInfo
+            return dataContent.Articles.Select(x => new ArticleInfo
             {
                 ID = x.ID,
                 Name = x.Name,
@@ -79,7 +79,7 @@ namespace DataBase.Working
         /// <param name="id">Идентификатор</param>
         public ArticleInfo GetByID(int id)
         {
-            Article articleTenp = _dataContent.Articles.FirstOrDefault(n => n.ID == id);
+            Article articleTenp = dataContent.Articles.FirstOrDefault(n => n.ID == id);
             if (articleTenp != null)
             {
                 return new ArticleInfo
@@ -138,7 +138,7 @@ namespace DataBase.Working
         public void Edit(int id, string name, string text, string autor, int headingID,
                          string nameFile, byte[] file, bool isDeleteFile)
         {
-            article = _dataContent.Articles.FirstOrDefault(x => x.ID == id);
+            article = dataContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
             Check(name, text, autor, headingID);
@@ -174,13 +174,13 @@ namespace DataBase.Working
                 throw new ArgumentException("Не указан автор");
             if (article == null)
             {
-                if (_dataContent.Articles.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
+                if (dataContent.Articles.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
                                                   x.HeadingID == headingID))
                     throw new ArgumentException("Текущее наименование уже используется");
             }
             else
             {
-                if (_dataContent.Articles.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
+                if (dataContent.Articles.Any(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
                                                   x.ID != article.ID &&
                                                   x.HeadingID == headingID))
                     throw new ArgumentException("Текущее наименование уже используется");
@@ -218,8 +218,8 @@ namespace DataBase.Working
             article.Author = autor.Trim();
             
             article.HeadingID = headingID;
-            if (isNew) _dataContent.Articles.Add(article);
-            _dataContent.SaveChanges();
+            if (isNew) dataContent.Articles.Add(article);
+            dataContent.SaveChanges();
             if (workForFiles == WorkForFiles.New)
             {
                 nameFile = "foto" + article.ID.ToString() + nameFile;
@@ -227,7 +227,7 @@ namespace DataBase.Working
                     article.FileName = nameFile;
                 else
                     article.FileName = string.Empty;
-                _dataContent.SaveChanges();
+                dataContent.SaveChanges();
                 if (file?.Length > 0)
                     WorkForFile(nameFile, string.Empty, file, isDeleteFile, WorkForFiles.New);
             }
@@ -237,12 +237,12 @@ namespace DataBase.Working
                 if (file?.Length > 0 && (article.FileName == null || article.FileName == string.Empty))
                 {
                     article.FileName = nameFile;
-                    _dataContent.SaveChanges();
+                    dataContent.SaveChanges();
                 }
                 else if (isDeleteFile)
                 {
                     article.FileName = string.Empty;
-                    _dataContent.SaveChanges();
+                    dataContent.SaveChanges();
                 }
             }
         }
@@ -317,12 +317,12 @@ namespace DataBase.Working
         /// <param name="id">Индефикатоп</param>
         public void Delete(int id)
         {
-            article = _dataContent.Articles.FirstOrDefault(x => x.ID == id);
+            article = dataContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
             WorkForFile(string.Empty, article.FileName, null, true, WorkForFiles.Delete);
-            _dataContent.Articles.Remove(article);
-            _dataContent.SaveChanges();
+            dataContent.Articles.Remove(article);
+            dataContent.SaveChanges();
         }
 
     }
