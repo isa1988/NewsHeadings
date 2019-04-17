@@ -10,13 +10,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTestDataBase
 {
     [TestClass]
-    class BaseTest
+    public class BaseTest
     {
         /// <summary>
         /// Метод используется в качестве конструктора
         /// </summary>
         [AssemblyInitialize]
-        public static void initialize()
+        public static void initialize(TestContext context)
         {
             /// <summary>
             /// Строка подключения

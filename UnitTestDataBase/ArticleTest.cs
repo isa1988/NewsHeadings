@@ -16,7 +16,7 @@ namespace UnitTestDataBase
     /// Тестирование блока статей рубрик
     /// </summary>
     [TestClass]
-    public class ArticleTest
+    public class ArticleTest 
     {
 
         /// <summary>
