@@ -101,27 +101,28 @@ namespace DataBase.Working
         /// </summary>
         /// <param name="name">Наимование</param>
         /// <param name="text">Тест статьи</param>
-        /// <param name="autor">Автор</param>
+        /// <param name="author">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
         /// <param name="nameFile">Наимование файла</param>
         /// <param name="file">Файл</param>
         /// <param name="isDeleteFile">Удаление файла при редактирование</param>
-        public void Insert(string name, string text, string autor, int headingID,
+        public int Insert(string name, string text, string author, int headingID,
                            string nameFile, byte[] file, bool isDeleteFile)
         {
-            Check(name, text, autor, headingID);
-            SetValue(name, text, autor, headingID, nameFile, file, isDeleteFile);
+            Check(name, text, author, headingID);
+            SetValue(name, text, author, headingID, nameFile, file, isDeleteFile);
+            return article.ID;
         }
 
         /// <summary>
         /// Добавление новой статьи 
         /// </summary>
         /// <param name="article">Модель статьи</param>
-        public void Insert(ArticleInfo article)
+        public int Insert(ArticleInfo article)
         {
             if (article == null)
                 throw new ArgumentException("Вы не указали объект");
-            Insert(article.Name, article.Text, article.Author, article.HeadingID, article.FileName, article.File, article.IsDelete);
+            return Insert(article.Name, article.Text, article.Author, article.HeadingID, article.FileName, article.File, article.IsDelete);
         }
 
         /// <summary>
@@ -130,19 +131,19 @@ namespace DataBase.Working
         /// <param name="id">Идентификатор</param>
         /// <param name="name">Наимование</param>
         /// <param name="text">Тест статьи</param>
-        /// <param name="autor">Автор</param>
+        /// <param name="author">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
         /// <param name="nameFile">Наимование файла</param>
         /// <param name="file">Файл</param>
         /// <param name="isDeleteFile">Удаление файла при редактирование</param>
-        public void Edit(int id, string name, string text, string autor, int headingID,
+        public void Edit(int id, string name, string text, string author, int headingID,
                          string nameFile, byte[] file, bool isDeleteFile)
         {
             article = dataContent.Articles.FirstOrDefault(x => x.ID == id);
             if (article == null)
                 throw new ArgumentException("Не найден объект");
-            Check(name, text, autor, headingID);
-            SetValue(name, text, autor, headingID, nameFile, file, isDeleteFile, false);
+            Check(name, text, author, headingID);
+            SetValue(name, text, author, headingID, nameFile, file, isDeleteFile, false);
         }
 
         /// <summary>
@@ -162,15 +163,15 @@ namespace DataBase.Working
         /// </summary>
         /// <param name="name">Наименование</param>
         /// <param name="text">Текст статьи</param>
-        /// <param name="autor">Автор</param>
+        /// <param name="author">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
-        private void Check(string name, string text, string autor, int headingID)
+        private void Check(string name, string text, string author, int headingID)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Не заполнено наименование");
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("Не заполнен текст статьи");
-            if (string.IsNullOrEmpty(autor))
+            if (string.IsNullOrEmpty(author))
                 throw new ArgumentException("Не указан автор");
             if (article == null)
             {
@@ -191,13 +192,13 @@ namespace DataBase.Working
         /// </summary>
         /// <param name="name">Наимование</param>
         /// <param name="text">Тест статьи</param>
-        /// <param name="autor">Автор</param>
+        /// <param name="author">Автор</param>
         /// <param name="headingID">Ссылка на рубрику</param>
         /// <param name="nameFile">Наимование файла</param>
         /// <param name="file">Файл</param>
         /// <param name="isDeleteFile">Удаление файла при редактирование</param>
         /// <param name="isNew">Новый</param>
-        private void SetValue(string name, string text, string autor, int headingID,
+        private void SetValue(string name, string text, string author, int headingID,
             string nameFile, byte[] file, bool isDeleteFile,  bool isNew = true)
         {
             WorkForFiles workForFiles = WorkForFiles.New;
@@ -215,7 +216,7 @@ namespace DataBase.Working
             
             article.Name = name.Trim();
             article.Text = text.Trim();
-            article.Author = autor.Trim();
+            article.Author = author.Trim();
             
             article.HeadingID = headingID;
             if (isNew) dataContent.Articles.Add(article);

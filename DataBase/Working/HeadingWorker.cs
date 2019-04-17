@@ -111,23 +111,24 @@ namespace DataBase.Working
         /// Добавление новой рубрики
         /// </summary>
         /// <param name="name">Наименование</param>
-        public void Insert(string name)
+        public int Insert(string name)
         {
             if (name == null) name = string.Empty;
             string path = GetPathLink(name);
             Check(name, path);
             SetValue(name, path);
+            return heading.ID;
         }
 
         /// <summary>
         /// Добавление новой рубрики
         /// </summary>
         /// <param name="heading">Модель рубрики</param>
-        public void Insert(HeadingInfo heading)
+        public int Insert(HeadingInfo heading)
         {
             if (heading == null)
                 throw new ArgumentException("Вы не указали объект");
-            Insert(heading.Name);
+            return Insert(heading.Name);
         }
 
         /// <summary>

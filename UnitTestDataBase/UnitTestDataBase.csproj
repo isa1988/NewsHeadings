@@ -55,8 +55,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleTesrs.cs" />
     <Compile Include="HeadingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,6 +71,16 @@
       <Project>{d04bb46b-afec-493e-98e0-502c6e6e7aa2}</Project>
       <Name>DataBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\NewsHeadingsWeb\App_Data\NewsHeadings.mdf">
+      <Link>App_Data\NewsHeadings.mdf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NewsHeadingsWeb\App_Data\NewsHeadings_log.ldf">
+      <Link>App_Data\NewsHeadings_log.ldf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

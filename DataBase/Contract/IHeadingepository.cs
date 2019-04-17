@@ -12,12 +12,12 @@ namespace DataBase.Contract
         /// Добавление новой рубрики
         /// </summary>
         /// <param name="name">Наименование</param>
-        void Insert(string name);
+        int Insert(string name);
         /// <summary>
         /// Добавление новой статьи 
         /// </summary>
         /// <param name="heading">Модель рубрики</param>
-        void Insert(HeadingInfo heading);
+        int Insert(HeadingInfo heading);
 
         /// <summary>
         /// Редактирование рубрики
