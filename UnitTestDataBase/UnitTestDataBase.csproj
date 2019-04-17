@@ -58,7 +58,8 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleTesrs.cs" />
+    <Compile Include="ArticleTest.cs" />
+    <Compile Include="BaseTest.cs" />
     <Compile Include="HeadingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

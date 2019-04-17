@@ -13,15 +13,14 @@ namespace NewsHeadingsWeb.Controllers
     /// <summary>
     /// Статьи контроллер
     /// </summary>
-    public class ArticleController : Controller
+    public class ArticleController : BaseController
     {
-        private IDataProvider dataProvider;
-
+        
         /// <summary>
         /// Статьи контроллер
         /// </summary>
         /// <param name="dataProvider">Работа с данными</param>
-        public ArticleController(IDataProvider dataProvider)
+        public ArticleController(IDataProvider dataProvider) : base(dataProvider)
         {
             this.dataProvider = dataProvider;
         }

@@ -39,5 +39,31 @@ namespace DataBase.Working
         {
             get { return heading ?? (heading = new HeadingWorker(dataContent)); }
         }
+
+        /// <summary>
+        /// Закрыть поток
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Диструктор
+        /// </summary>
+        ~DataProvider()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (dataContent != null)
+            {
+                dataContent.Dispose();
+                dataContent = null;
+            }
+        }
     }
 }

@@ -13,18 +13,18 @@ namespace NewsHeadingsWeb.Controllers
     /// <summary>
     /// Рубрика контроллер
     /// </summary>
-    public class HeadingController : Controller
+    public class HeadingController : BaseController
     {
-        private IDataProvider dataProvider;
 
         /// <summary>
         /// Рубрика контроллер
         /// </summary>
         /// <param name="dataProvider">Работа с данными</param>
-        public HeadingController(IDataProvider dataProvider)
+        public HeadingController(IDataProvider dataProvider) : base(dataProvider)
         {
             this.dataProvider = dataProvider;
         }
+
         /// <summary>
         /// Добавление рубрики
         /// </summary>

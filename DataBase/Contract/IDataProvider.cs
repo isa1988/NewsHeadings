@@ -1,10 +1,12 @@
 ﻿
+using System;
+
 namespace DataBase.Contract
 {
     /// <summary>
     /// Операции с данными
     /// </summary>
-    public interface IDataProvider
+    public interface IDataProvider : IDisposable
     {
         /// <summary>
         /// Статьи новостей
