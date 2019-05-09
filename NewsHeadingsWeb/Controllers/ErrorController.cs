@@ -5,9 +5,6 @@ namespace NewsHeadingsWeb.Controllers
 	using Moveax.Mvc.ErrorHandler;
     using NewsHeadingsWeb.Models;
 
-    /// <summary>
-    /// Вывод ошибок контроллер
-    /// </summary>
     public class ErrorController : ErrorHandlerControllerBase
     {
         /// <summary>Default action.</summary>
