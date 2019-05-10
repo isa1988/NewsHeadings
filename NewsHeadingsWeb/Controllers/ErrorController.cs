@@ -2,7 +2,7 @@ namespace NewsHeadingsWeb.Controllers
 {
     using System;
     using System.Web.Mvc;
-	using Moveax.Mvc.ErrorHandler;
+    using Moveax.Mvc.ErrorHandler;
     using NewsHeadingsWeb.Models;
 
     public class ErrorController : ErrorHandlerControllerBase
@@ -36,8 +36,8 @@ namespace NewsHeadingsWeb.Controllers
             };
             return this.View(errorModdel);
         }
-
-		/// <summary>Called before the action method is invoked. Use it for error logging etc</summary>
+        
+        /// <summary>Called before the action method is invoked. Use it for error logging etc</summary>
         /// <param name="errorDescription">The error description.</param>
         protected override void HandleError(ErrorDescription errorDescription)
         {
